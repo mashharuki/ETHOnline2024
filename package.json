@@ -1,0 +1,21 @@
+{
+  "name": "EthOnline2024",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "https://github.com/mashharuki/EthOnline2024.git",
+  "author": "Haruki Kondo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.2.4",
+    "yarn": "1.22.19"
+  },
+  "workspaces": [
+    "pkgs/*"
+  ],
+  "scripts": {
+    "frontend": "yarn workspace frontend",
+    "backend": "yarn workspace backend"
+  }
+}
