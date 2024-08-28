@@ -105,3 +105,7 @@ This repo for ETHOnline2024
 14. [Morph - faucet site](https://morph-token-faucet.vercel.app/)
 15. [Morph Bridge site holesky - Morph](https://bridge-holesky.morphl2.io/)
 16. [Morph BlockExplorer](https://explorer-holesky.morphl2.io/address/0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072)
+17. [Galadriel HP](https://teeml.galadriel.com/)
+18. [Galadriel Devnet Explorer](https://explorer.galadriel.com/address/0x68EC9556830AD097D661Df2557FBCeC166a0A075)
+19. [GitHub - Galadriel sample contract](https://github.com/galadriel-ai/contracts/tree/main)
+20. [Galadriel Docs Calling an LLM: simple](https://docs.galadriel.com/tutorials/simple_llm)
