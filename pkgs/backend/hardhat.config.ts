@@ -1,11 +1,11 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@tableland/hardhat";
 import * as dotenv from "dotenv";
 import fs from "fs";
+import "hardhat-dependency-compiler";
 import "hardhat-gas-reporter";
 import {HardhatUserConfig} from "hardhat/config";
 import path from "path";
-
-import "hardhat-gas-reporter";
 
 dotenv.config();
 
@@ -41,6 +41,12 @@ const config: HardhatUserConfig = {
         runs: 500,
       },
     },
+  },
+  /* */
+  dependencyCompiler: {
+    paths: [
+      "./../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
+    ],
   },
   networks: {
     holesky: {
@@ -97,6 +103,10 @@ const config: HardhatUserConfig = {
     coinmarketcap: COINMARKETCAP_API_KEY,
     gasPriceApi:
       "https://api.etherscan.io/api?module=proxy&action=eth_gasPrice",
+  },
+  localTableland: {
+    silent: false,
+    verbose: false,
   },
 };
 

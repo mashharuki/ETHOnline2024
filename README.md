@@ -139,7 +139,5 @@ Responsible Web3
 18. [Galadriel Devnet Explorer](https://explorer.galadriel.com/address/0x68EC9556830AD097D661Df2557FBCeC166a0A075)
 19. [GitHub - Galadriel sample contract](https://github.com/galadriel-ai/contracts/tree/main)
 20. [Galadriel Docs Calling an LLM: simple](https://docs.galadriel.com/tutorials/simple_llm)
-
-```
-
-```
+21. [Eth2Vec: 深層学習による言語処理に基づいたスマートコントラクトの安全性解析ツールの設計](https://cir.nii.ac.jp/crid/1050855522064873472)
+22. [GitHub - Eth2Vec](https://github.com/fseclab-osaka/eth2vec)
