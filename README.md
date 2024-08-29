@@ -12,6 +12,8 @@ This repo for ETHOnline2024
 
 ## Product name
 
+Responsible Web3
+
 ## Short description
 
 ## description
