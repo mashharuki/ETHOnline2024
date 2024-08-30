@@ -61,4 +61,7 @@ contract HelloWorld is ERC2771Context {
       return super._msgData();
     }
   }
+
+  receive() external payable {}  
+  fallback() external payable {}
 }
