@@ -12,9 +12,12 @@
     "lint": "solhint 'contracts/**/*.sol' -- --fix",
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
     "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:TxDB": "hardhat run scripts/deploy__TxDB.ts",
     "verify": "npx hardhat verify",
-    "gaslessSetNewText": "npx hardhat run scripts/relay/gaslessSetScore.ts",
-    "getText": "npx hardhat getText"
+    "getText": "npx hardhat getText",
+    "getAllTableData": "npx hardhat getAllTableData",
+    "setAccessControl": "npx hardhat setAccessControl",
+    "insertData": "npx hardhat insertData"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.1",

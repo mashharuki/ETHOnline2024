@@ -12,7 +12,7 @@ dotenv.config();
 const {
   PRIVATE_KEY,
   INFURA_API_KEY,
-  SCROLLSCAN_API_KEY,
+  ETHERSCAN_API_KEY,
   GAS_REPORT,
   ROOTSTACK_API_KEY,
   COINMARKETCAP_API_KEY,
@@ -49,6 +49,10 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+    },
     holesky: {
       url: `https://holesky.infura.io/v3/${INFURA_API_KEY}`,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
@@ -81,7 +85,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      scrollSepolia: SCROLLSCAN_API_KEY!,
+      sepolia: ETHERSCAN_API_KEY!,
       morphTestnet: "anything",
     },
     customChains: [

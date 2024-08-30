@@ -18,7 +18,7 @@ contract TxDB is TablelandController, ERC721Holder {
   string private tableName;
   string private constant _TABLE_PREFIX = "transaction_table";
   bytes32 private rootHash;
-  address owner;
+  address public owner;
 
   /// events
 
@@ -38,18 +38,18 @@ contract TxDB is TablelandController, ERC721Holder {
   constructor() {
     // Create a table
     tableId = TablelandDeployments.get().create(
-        address(this),
-        SQLHelpers.toCreateFromSchema(
-          "id integer primary key,"
-          "address text,"
-          "chainid text,"
-          "from text,"
-          "to text,"
-          "data text,"
-          "signature text,"
-          "plaintext text",
-          _TABLE_PREFIX
-        )
+      address(this),
+      SQLHelpers.toCreateFromSchema(
+        "id integer primary key,"
+        "address text,"
+        "chainId text,"
+        "from text,"
+        "to text,"
+        "data text,"
+        "signature text,"
+        "plaintext text",
+        _TABLE_PREFIX
+      )
     );
     tableName = SQLHelpers.toNameFromId(_TABLE_PREFIX, tableId);
     // Set owner
@@ -76,7 +76,7 @@ contract TxDB is TablelandController, ERC721Holder {
       SQLHelpers.toInsert(
         _TABLE_PREFIX,
         tableId,
-        "address, chainid, from, to, data, signature, plaintext",
+        "address, chainId, from, to, data, signature, plaintext",
         string.concat(
           SQLHelpers.quote(_address),
           ",",
@@ -117,7 +117,7 @@ contract TxDB is TablelandController, ERC721Holder {
       "plaintext=", SQLHelpers.quote(_plaintext)
     );
     string memory filters = string.concat(
-      "address=", SQLHelpers.quote(_address), " AND chainid=", SQLHelpers.quote(_chainId)
+      "address=", SQLHelpers.quote(_address), " AND chainId=", SQLHelpers.quote(_chainId)
     );
     TablelandDeployments.get().mutate(
       address(this),
@@ -132,7 +132,7 @@ contract TxDB is TablelandController, ERC721Holder {
    */
   function deleteTransaction(string memory _address, string memory _chainId) external {
     string memory filters = string.concat(
-      "address=", SQLHelpers.quote(_address), " AND chainid=", SQLHelpers.quote(_chainId)
+      "address=", SQLHelpers.quote(_address), " AND chainId=", SQLHelpers.quote(_chainId)
     );
     TablelandDeployments.get().mutate(
       address(this),
@@ -141,27 +141,6 @@ contract TxDB is TablelandController, ERC721Holder {
     );
     emit Delete(tableId, tableName, _address, _chainId);
   }
-
-  /**
-   * Select specific transaction data by address and chainid
-   */
-  function selectTransaction(string memory _address, string memory _chainId) external view returns (string memory) {
-    string memory query = string.concat(
-      "SELECT * FROM ", tableName, " WHERE address=", SQLHelpers.quote(_address), " AND chainid=", SQLHelpers.quote(_chainId)
-    );
-    return query;
-  }
-
-  /**
-   * Select all transaction data
-   */
-  function selectAllTransactions() external view returns (string memory) {
-    string memory query = string.concat(
-      "SELECT * FROM ", tableName
-    );
-    return query;
-  }
-
   
   /**
    * Dynamic ACL controller policy that allows any inserts, updates, and deletes
@@ -213,4 +192,10 @@ contract TxDB is TablelandController, ERC721Holder {
   function getTableId() external view returns (uint256) {
     return tableId;
   }
+
+  /**
+   * fallback function
+   */
+  receive() external payable {}  
+  fallback() external payable {}
 }

@@ -109,6 +109,24 @@ Responsible Web3
     yarn backend deploy --network <network name>
     ```
 
+  - **verify contract**
+
+    ```bash
+    yarn backend verify --contract contracts/TxDB.sol:TxDB <address> --network <network name>
+    ```
+
+  - **setAccessControl task**
+
+    ```bash
+    yarn backend setAccessControl --network <network name>
+    ```
+
+  - **insertData task**
+
+    ```bash
+    yarn backend insertData --network sepolia
+    ```
+
 - **scripts**
 
   - **call SIMPLE_LLM_CONTRACT's sendMessage function**
@@ -141,3 +159,4 @@ Responsible Web3
 20. [Galadriel Docs Calling an LLM: simple](https://docs.galadriel.com/tutorials/simple_llm)
 21. [Eth2Vec: 深層学習による言語処理に基づいたスマートコントラクトの安全性解析ツールの設計](https://cir.nii.ac.jp/crid/1050855522064873472)
 22. [GitHub - Eth2Vec](https://github.com/fseclab-osaka/eth2vec)
+23. [TableLand Studio](https://studio.tableland.xyz/)
