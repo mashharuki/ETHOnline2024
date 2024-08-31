@@ -1,18 +1,18 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@tableland/hardhat";
 import * as dotenv from "dotenv";
 import fs from "fs";
+import "hardhat-dependency-compiler";
 import "hardhat-gas-reporter";
 import {HardhatUserConfig} from "hardhat/config";
 import path from "path";
-
-import "hardhat-gas-reporter";
 
 dotenv.config();
 
 const {
   PRIVATE_KEY,
   INFURA_API_KEY,
-  SCROLLSCAN_API_KEY,
+  ETHERSCAN_API_KEY,
   GAS_REPORT,
   ROOTSTACK_API_KEY,
   COINMARKETCAP_API_KEY,
@@ -55,7 +55,17 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  /* */
+  dependencyCompiler: {
+    paths: [
+      "./../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
+    ],
+  },
   networks: {
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+    },
     holesky: {
       url: `https://holesky.infura.io/v3/${INFURA_API_KEY}`,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
@@ -88,7 +98,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      scrollSepolia: SCROLLSCAN_API_KEY!,
+      sepolia: ETHERSCAN_API_KEY!,
       morphTestnet: "anything",
     },
     customChains: [
@@ -110,6 +120,10 @@ const config: HardhatUserConfig = {
     coinmarketcap: COINMARKETCAP_API_KEY,
     gasPriceApi:
       "https://api.etherscan.io/api?module=proxy&action=eth_gasPrice",
+  },
+  localTableland: {
+    silent: false,
+    verbose: false,
   },
 };
 

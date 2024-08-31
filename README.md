@@ -1,10 +1,8 @@
 # ETHOnline2024
 
-This repo for ETHOnline2024
-
 ![](./docs/img/cover_logo.png)
 
-# Overview
+## Overview
 
 ## Live Demo
 
@@ -12,11 +10,27 @@ This repo for ETHOnline2024
 
 ## Product name
 
+Responsible Web3
+
 ## Short description
 
 ## description
 
 ## How it's made
+
+## Related Contract Addresses
+
+- ### Sepolia
+
+  | Name | Address | Memo |
+  | ---- | ------- | ---- |
+  |      |         |      |
+
+- ### Galadriel
+
+  | Name | Address | Memo |
+  | ---- | ------- | ---- |
+  |      |         |      |
 
 ## How to work
 
@@ -45,47 +59,93 @@ This repo for ETHOnline2024
 
   - **frontend**
 
-  - **backend**
+  - **scripts**
 
-- **build frontend**
+    1.  create `pkgs/scripts/.env` file
 
-  ```bash
-  yarn frontend build
-  ```
+    2.  set some values
 
-- **start frontend**
+        ```txt
+        CHAIN_ID=696969
+        RPC_URL="https://devnet.galadriel.com/"
+        PRIVATE_KEY=""
+        CHAT_CONTRACT_ADDRESS="0x4A5e76a1aEa072BF32a71A61F52FC1f410AAd748"
+        CHAT_VISION_CONTRACT_ADDRESS="0x785578B0dA5F21F8321590981E15F618BBc1915c"
+        AGENT_CONTRACT_ADDRESS="0xFb09a7a940ae690Fafc59e18310c4deBF75B1B52"
+        ANTROPIC_CONTRACT_ADDRESS="0x8cA1e115f96A562418968B475c1F096a8A385Ddb"
+        SIMPLE_LLM_CONTRACT_ADDRESS="0xd09dFE5025FB25000aA22021F7355656cd10EB17"
+        COINMARKETCAP_API_KEY=
+        ```
 
-  ```bash
-  yarn frontend dev
-  ```
+- **frontend**
 
-- **create contract addresses json file**
+  - **build frontend**
 
-  please set --network option value
+    ```bash
+    yarn frontend build
+    ```
 
-  ```bash
-  yarn backend setup --network <network name>
-  ```
+  - **start frontend**
 
-- **compile backend**
+    ```bash
+    yarn frontend dev
+    ```
 
-  ```bash
-  yarn backend compile
-  ```
+- **backend**
 
-- **test backend**
+  - **create contract addresses json file**
 
-  ```bash
-  yarn backend test
-  ```
+    please set --network option value
 
-- **deploy backend**
+    ```bash
+    yarn backend setup --network <network name>
+    ```
 
-  please set --network option value
+  - **compile backend**
 
-  ```bash
-  yarn backend deploy --network <network name>
-  ```
+    ```bash
+    yarn backend compile
+    ```
+
+  - **test backend**
+
+    ```bash
+    yarn backend test
+    ```
+
+  - **deploy backend**
+
+    please set --network option value
+
+    ```bash
+    yarn backend deploy --network <network name>
+    ```
+
+  - **verify contract**
+
+    ```bash
+    yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
+    ```
+
+  - **setAccessControl task**
+
+    ```bash
+    yarn backend setAccessControl --network <network name>
+    ```
+
+  - **insertData task**
+
+    ```bash
+    yarn backend insertData --network sepolia
+    ```
+
+- **scripts**
+
+  - **call SIMPLE_LLM_CONTRACT's sendMessage function**
+
+    ```bash
+    yarn scripts simpleChat
+    ```
 
 ### reference
 
@@ -105,3 +165,10 @@ This repo for ETHOnline2024
 14. [Morph - faucet site](https://morph-token-faucet.vercel.app/)
 15. [Morph Bridge site holesky - Morph](https://bridge-holesky.morphl2.io/)
 16. [Morph BlockExplorer](https://explorer-holesky.morphl2.io/address/0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072)
+17. [Galadriel HP](https://teeml.galadriel.com/)
+18. [Galadriel Devnet Explorer](https://explorer.galadriel.com/address/0x68EC9556830AD097D661Df2557FBCeC166a0A075)
+19. [GitHub - Galadriel sample contract](https://github.com/galadriel-ai/contracts/tree/main)
+20. [Galadriel Docs Calling an LLM: simple](https://docs.galadriel.com/tutorials/simple_llm)
+21. [Eth2Vec: 深層学習による言語処理に基づいたスマートコントラクトの安全性解析ツールの設計](https://cir.nii.ac.jp/crid/1050855522064873472)
+22. [GitHub - Eth2Vec](https://github.com/fseclab-osaka/eth2vec)
+23. [TableLand Studio](https://studio.tableland.xyz/)
