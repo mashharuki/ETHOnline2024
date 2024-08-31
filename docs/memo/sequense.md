@@ -57,16 +57,16 @@ sequenceDiagram
     actor user
     participant front as 画面
     participant ai as galadriel
-    participant db as Tableland
     participant chain as 任意のブロックチェーン
+    participant db as Tableland
     user ->> front: Txの発火を要求
     Note over front: Tx生データを生成
     front ->> ai: Txの解析を依頼
     Note over ai: teeMLを呼び出す
     ai ->> front: 解析結果を返却
+    front ->> chain: Txを送信
+    chain ->> front: 結果を返却
     Note over front: 署名データを生成
     front ->> db: Txと署名データ、解析結果を登録する
     db ->> front: 登録結果を返却する
-    front ->> chain: Txを送信
-    chain ->> front: 結果を返却
 ```
