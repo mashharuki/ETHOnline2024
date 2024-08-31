@@ -71,7 +71,7 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     baseSepolia: {
-      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      url: `	https://sepolia.base.org`,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     hederaTestnet: {
