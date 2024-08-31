@@ -165,7 +165,7 @@ Responsible Web3
 
       [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x1f389be6f625b0ed688d97c8e1ea68e74e4081aa663691269bda79b643f51172)
 
-      [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
+      [Rarible Minted NFT]()
 
 ## Sample NFT's metadata URI
 
