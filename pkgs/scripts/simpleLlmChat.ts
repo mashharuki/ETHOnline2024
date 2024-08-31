@@ -1,8 +1,35 @@
 import {Contract, ethers, Wallet} from "ethers";
-import * as readline from "readline";
 import ABI from "./abis/OpenAiSimpleLLM.json";
 
 require("dotenv").config();
+
+/**
+ * トランザクションデータを組み立てるメソッド
+ */
+const createTxData = async (wallet: Wallet) => {
+  // create a transaction
+  const transaction = await wallet.signTransaction({
+    to: "0x1431ea8af860C3862A919968C71f901aEdE1910E",
+    value: ethers.parseEther("0.01"),
+  });
+
+  console.log("Transaction created:", transaction);
+
+  // estimeate gas
+  const gasEstimate = await wallet.estimateGas({
+    to: "0x1431ea8af860C3862A919968C71f901aEdE1910E",
+    value: ethers.parseEther("0.01"),
+  });
+
+  console.log("Gas estimate:", gasEstimate);
+
+  return {
+    to: "0x1431ea8af860C3862A919968C71f901aEdE1910E",
+    value: ethers.parseEther("0.01").toString(),
+    gas: gasEstimate.toString(),
+    signedTx: transaction.toString(),
+  };
+};
 
 /**
  * OpenAIのチャットを呼び出してみるシンプルなスクリプト
@@ -24,16 +51,24 @@ async function main() {
   // The message you want to start the chat with
   // const message = await getUserInput()
 
-  const message = `
-    The following data represents a transaction that will be sent to the blockchain. 
-    Could you please explain this data in plain language so that even a beginner can understand it?
-    Please summarize it in a clear and concise manner.
+  const tx = await createTxData(wallet);
 
-    {
-      "from": "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
-      "to": "0x1431ea8af860C3862A919968C71f901aEdE1910E",
-      "value": 0.01
-    }
+  const message = `
+    You are an expert in blockchain analysis.
+    Please analyze the following blockchain transaction data and provide a detailed natural language description. The description should include:
+
+    - The type of transaction (e.g., transfer, contract execution, staking).
+    - The sender and receiver addresses.
+    - The amount of cryptocurrency or tokens involved, including the currency type.
+    - Any associated fees or costs.
+    - The date and time of the transaction.
+    - Any relevant contract details, if applicable.
+    - The purpose or intent behind the transaction, if identifiable.
+
+    Here is a transaction data:
+    ${JSON.stringify(tx)}
+
+    [output]
   `;
 
   // Call the sendMessage function of SIMPLE_LLM_CONTRACT_ADDRESS
@@ -53,28 +88,4 @@ async function main() {
   }
 }
 
-async function getUserInput(): Promise<string | undefined> {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  const question = (query: string): Promise<string> => {
-    return new Promise((resolve) => {
-      rl.question(query, (answer) => {
-        resolve(answer);
-      });
-    });
-  };
-
-  try {
-    const input = await question("Message ChatGPT: ");
-    rl.close();
-    return input;
-  } catch (err) {
-    console.error("Error getting user input:", err);
-    rl.close();
-  }
-}
-
-main().then(() => console.log("Done"));
+main();

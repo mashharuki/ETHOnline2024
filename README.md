@@ -137,7 +137,3 @@ This repo for ETHOnline2024
 18. [Galadriel Devnet Explorer](https://explorer.galadriel.com/address/0x68EC9556830AD097D661Df2557FBCeC166a0A075)
 19. [GitHub - Galadriel sample contract](https://github.com/galadriel-ai/contracts/tree/main)
 20. [Galadriel Docs Calling an LLM: simple](https://docs.galadriel.com/tutorials/simple_llm)
-
-```
-
-```
