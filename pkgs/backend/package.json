@@ -12,6 +12,7 @@
     "lint": "solhint 'contracts/**/*.sol' -- --fix",
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
     "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:nft": "hardhat run scripts/deployNft.ts",
     "verify": "npx hardhat verify",
     "gaslessSetNewText": "npx hardhat run scripts/relay/gaslessSetScore.ts",
     "getText": "npx hardhat getText"

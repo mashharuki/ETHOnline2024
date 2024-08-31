@@ -34,13 +34,26 @@ if (!SKIP_LOAD) {
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.20",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 500,
+    compilers: [
+      {
+        version: "0.8.20",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 500,
+          },
+        },
       },
-    },
+      {
+        version: "0.8.25",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 500,
+          },
+        },
+      },
+    ],
   },
   networks: {
     holesky: {
@@ -48,7 +61,7 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     hederaTestnet: {
-      url: "https://testnet.hashio.io/api" || "",
+      url: "https://testnet.hashio.io/api",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     rskTestnet: {
@@ -68,7 +81,7 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     morphTestnet: {
-      url: "https://rpc-quicknode-holesky.morphl2.io" || "",
+      url: "https://rpc-quicknode-holesky.morphl2.io",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       gasPrice: 2000000000, // 2 gwei in wei
     },
