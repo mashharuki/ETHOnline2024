@@ -204,3 +204,4 @@ Responsible Web3
 29. [GitHub - Kinto Wallet SDK](https://github.com/KintoXYZ/kinto-web-sdk)
 30. [GitHub - Kinto Wallet SDK Sample](https://github.com/KintoXYZ/react-sdk-sample)
 31. [jiffyscan](https://jiffyscan.xyz/?network=mainnet)
+32. [Medium - 💻 Kinto launches Wallet SDK](https://medium.com/mamori-finance/kinto-launches-the-wallet-sdk-239a88265f17)
