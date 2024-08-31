@@ -58,7 +58,7 @@ const config: HardhatUserConfig = {
   /* */
   dependencyCompiler: {
     paths: [
-      "./../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
+      "./../../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
     ],
   },
   networks: {
