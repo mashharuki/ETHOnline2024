@@ -2,6 +2,7 @@ import {Database} from "@tableland/sdk";
 import "dotenv/config";
 import {task} from "hardhat/config";
 import {HardhatRuntimeEnvironment} from "hardhat/types";
+import {privateKeyToAccount} from "viem/accounts";
 
 interface TableData {
   id: number;
@@ -19,6 +20,11 @@ interface TableData {
 task("getAllTableData", "Prints all table Data")
   .addParam("tablename", "The table's name")
   .setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
+    // privatekey to accout
+    const accout = privateKeyToAccount(
+      process.env.PRIVATE_KEY! as `0x${string}`
+    );
+
     // Create a database connection
     const db = new Database();
 

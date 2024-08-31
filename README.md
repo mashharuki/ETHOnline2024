@@ -1,10 +1,8 @@
 # ETHOnline2024
 
-This repo for ETHOnline2024
-
 ![](./docs/img/cover_logo.png)
 
-# Overview
+## Overview
 
 ## Live Demo
 
@@ -19,6 +17,20 @@ Responsible Web3
 ## description
 
 ## How it's made
+
+## Related Contract Addresses
+
+- ### Sepolia
+
+  | Name | Address | Memo |
+  | ---- | ------- | ---- |
+  |      |         |      |
+
+- ### Galadriel
+
+  | Name | Address | Memo |
+  | ---- | ------- | ---- |
+  |      |         |      |
 
 ## How to work
 
