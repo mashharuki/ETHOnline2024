@@ -124,7 +124,7 @@ Responsible Web3
   - **verify contract**
 
     ```bash
-    yarn backend verify --contract contracts/TxDB.sol:TxDB <address> --network <network name>
+    yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
     ```
 
   - **setAccessControl task**
