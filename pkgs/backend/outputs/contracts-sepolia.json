@@ -2,6 +2,7 @@
   "contracts": {
     "SampleForwarder": "0x649Fe3F69345740e8dC2653a66BcCA79e3A5123A",
     "HelloWorld": "0xE826Cd4D79d3a28553ad190a36fbDb4de9574710",
-    "TxDB": "0x87D8402419e75fe5f13435e9B254004F39b8Ad3D"
+    "TxDB": "0x87D8402419e75fe5f13435e9B254004F39b8Ad3D",
+    "SourceMinter": "0x08c49b662c0c2A5D5f0560E01eE3c3fEdF8938d9"
   }
 }

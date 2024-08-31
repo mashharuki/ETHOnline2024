@@ -1,0 +1,8 @@
+{
+  "contracts": {
+    "SampleForwarder": "0x046283C3f76178dEAe802f95D831a4F956130dF4",
+    "HelloWorld": "0xB93AE7eaBee6FCEc0ff242deA52528ed69A0a6D5",
+    "ETHOnline2024NFT": "0x110c67d4B5850f23E9dA6de990d3d20e27Dca88d",
+    "DestinationMinter": "0x78DFC3847E223b66D85e257dAe3830e00A8a55cC"
+  }
+}
