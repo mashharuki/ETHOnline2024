@@ -12,6 +12,7 @@
     "lint": "solhint 'contracts/**/*.sol' -- --fix",
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
     "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:nft": "hardhat run scripts/deployNft.ts",
     "deploy:TxDB": "hardhat run scripts/deploy__TxDB.ts",
     "verify": "npx hardhat verify",
     "getText": "npx hardhat getText",
