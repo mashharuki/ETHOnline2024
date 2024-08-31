@@ -1,18 +1,18 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@tableland/hardhat";
 import * as dotenv from "dotenv";
 import fs from "fs";
+import "hardhat-dependency-compiler";
 import "hardhat-gas-reporter";
 import {HardhatUserConfig} from "hardhat/config";
 import path from "path";
-
-import "hardhat-gas-reporter";
 
 dotenv.config();
 
 const {
   PRIVATE_KEY,
   INFURA_API_KEY,
-  SCROLLSCAN_API_KEY,
+  ETHERSCAN_API_KEY,
   GAS_REPORT,
   ROOTSTACK_API_KEY,
   COINMARKETCAP_API_KEY,
@@ -34,21 +34,48 @@ if (!SKIP_LOAD) {
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.20",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 500,
+    compilers: [
+      {
+        version: "0.8.20",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 500,
+          },
+        },
       },
-    },
+      {
+        version: "0.8.25",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 500,
+          },
+        },
+      },
+    ],
+  },
+  /* */
+  dependencyCompiler: {
+    paths: [
+      "./../../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
+    ],
   },
   networks: {
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+    },
     holesky: {
       url: `https://holesky.infura.io/v3/${INFURA_API_KEY}`,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
+    baseSepolia: {
+      url: `	https://sepolia.base.org`,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+    },
     hederaTestnet: {
-      url: "https://testnet.hashio.io/api" || "",
+      url: "https://testnet.hashio.io/api",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     rskTestnet: {
@@ -68,14 +95,14 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
     morphTestnet: {
-      url: "https://rpc-quicknode-holesky.morphl2.io" || "",
+      url: "https://rpc-quicknode-holesky.morphl2.io",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       gasPrice: 2000000000, // 2 gwei in wei
     },
   },
   etherscan: {
     apiKey: {
-      scrollSepolia: SCROLLSCAN_API_KEY!,
+      sepolia: ETHERSCAN_API_KEY!,
       morphTestnet: "anything",
     },
     customChains: [
@@ -97,6 +124,10 @@ const config: HardhatUserConfig = {
     coinmarketcap: COINMARKETCAP_API_KEY,
     gasPriceApi:
       "https://api.etherscan.io/api?module=proxy&action=eth_gasPrice",
+  },
+  localTableland: {
+    silent: false,
+    verbose: false,
   },
 };
 
