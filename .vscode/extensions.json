@@ -4,6 +4,7 @@
     "PKief.material-icon-theme",
     "tamasfe.even-better-toml",
     "NomicFoundation.hardhat-solidity",
-    "tintinweb.solidity-visual-auditor"
+    "tintinweb.solidity-visual-auditor",
+    "bierner.markdown-mermaid"
   ]
 }
