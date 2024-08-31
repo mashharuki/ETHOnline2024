@@ -163,7 +163,9 @@ Responsible Web3
       yarn backend crossChainMint --destination baseSepolia --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --fee LINK --network sepolia
       ```
 
-      [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x399930e592472d190ce2266c3e70bc0346b8f6d99aec44417ab937ec92f85799)
+      [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x1f389be6f625b0ed688d97c8e1ea68e74e4081aa663691269bda79b643f51172)
+
+      [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
 
 ## Sample NFT's metadata URI
 
