@@ -127,25 +127,47 @@ Responsible Web3
     yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
     ```
 
-  - **setAccessControl task**
+  - **TableLand**
 
-    ```bash
-    yarn backend setAccessControl --network <network name>
-    ```
+    - **setAccessControl task**
 
-  - **insertData task**
+      ```bash
+      yarn backend setAccessControl --network <network name>
+      ```
 
-    ```bash
-    yarn backend insertData --network sepolia
-    ```
+    - **insertData task**
 
-- **scripts**
+      ```bash
+      yarn backend insertData --network <network name>
+      ```
 
-  - **call SIMPLE_LLM_CONTRACT's sendMessage function**
+  - **Chainlink CCIP**
 
-    ```bash
-    yarn scripts simpleChat
-    ```
+    - **deploy NFT & destination Contract**
+
+      ```bash
+      yarn backend deploy-destination-cross-chain-nft-minter --network baseSepolia
+      ```
+
+    - **deploy SourceMinter contract**
+
+      ```bash
+      yarn backend deploy-source-cross-chain-nft-minter --network sepolia
+      ```
+
+      & you should send LINK token to SourceMinter Contract
+
+    - **mint CrossChainNFT**
+
+      ```bash
+      yarn backend crossChainMint --destination baseSepolia --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --fee LINK --network sepolia
+      ```
+
+      [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x399930e592472d190ce2266c3e70bc0346b8f6d99aec44417ab937ec92f85799)
+
+## Sample NFT's metadata URI
+
+[here](https://bafybeicfsjwjtdlt67nkfoxsma4cyl4zsjjyqtn27rgnpno5gr2zd5yf34.ipfs.w3s.link/sample)
 
 ### reference
 
@@ -172,3 +194,7 @@ Responsible Web3
 21. [Eth2Vec: 深層学習による言語処理に基づいたスマートコントラクトの安全性解析ツールの設計](https://cir.nii.ac.jp/crid/1050855522064873472)
 22. [GitHub - Eth2Vec](https://github.com/fseclab-osaka/eth2vec)
 23. [TableLand Studio](https://studio.tableland.xyz/)
+24. [Chainlink CCIP Supported Testnet Networks](https://docs.chain.link/ccip/supported-networks/v1_2_0/testnet)
+25. [Chainlink CCIP Sepolia info](https://docs.chain.link/ccip/supported-networks/v1_2_0/testnet#ethereum-sepolia)
+26. [Chainlink CCIP CrossChainGuide](https://github.com/smartcontractkit/ccip-starter-kit-hardhat/blob/main/README.md#example-7---execute-received-message-as-a-function-call)
+27. [Chainlink CCIP Explorer](https://ccip.chain.link/)

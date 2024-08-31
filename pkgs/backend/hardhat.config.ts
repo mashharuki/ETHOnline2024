@@ -70,6 +70,10 @@ const config: HardhatUserConfig = {
       url: `https://holesky.infura.io/v3/${INFURA_API_KEY}`,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
+    baseSepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+    },
     hederaTestnet: {
       url: "https://testnet.hashio.io/api",
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
