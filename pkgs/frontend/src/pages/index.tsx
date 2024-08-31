@@ -1,6 +1,4 @@
-import Toaster from "@/components/Toaster";
-import styles from "@/styles/Home.module.css";
-import "react-toastify/dist/ReactToastify.css";
+import { Button, Container, Heading } from "@chakra-ui/react";
 
 /**
  * Home Component
@@ -8,11 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
  */
 export default function Home() {
   return (
-    <>
-      <main className={styles.main}>
-        テスト
-        <Toaster />
-      </main>
-    </>
+    <Container>
+      <Heading>Responsible web3</Heading>
+      <Button color="teal">Get Start</Button>
+    </Container>
   );
 }
