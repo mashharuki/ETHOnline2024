@@ -200,3 +200,7 @@ Responsible Web3
 25. [Chainlink CCIP Sepolia info](https://docs.chain.link/ccip/supported-networks/v1_2_0/testnet#ethereum-sepolia)
 26. [Chainlink CCIP CrossChainGuide](https://github.com/smartcontractkit/ccip-starter-kit-hardhat/blob/main/README.md#example-7---execute-received-message-as-a-function-call)
 27. [Chainlink CCIP Explorer](https://ccip.chain.link/)
+28. [Kinto Wallet SDK](https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/kinto-wallet-web-sdk)
+29. [GitHub - Kinto Wallet SDK](https://github.com/KintoXYZ/kinto-web-sdk)
+30. [GitHub - Kinto Wallet SDK Sample](https://github.com/KintoXYZ/react-sdk-sample)
+31. [jiffyscan](https://jiffyscan.xyz/?network=mainnet)
