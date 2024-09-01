@@ -205,3 +205,8 @@ Responsible Web3
 30. [GitHub - Kinto Wallet SDK Sample](https://github.com/KintoXYZ/react-sdk-sample)
 31. [jiffyscan](https://jiffyscan.xyz/?network=mainnet)
 32. [Medium - 💻 Kinto launches Wallet SDK](https://medium.com/mamori-finance/kinto-launches-the-wallet-sdk-239a88265f17)
+33. [HederaScan - Testnet](https://hashscan.io/testnet/dashboard?p2=1&k2=1725160501.286348003&p3=1&k3=1725148802.532220003&p1=1&k1=1725160501.170967003)
+34. [BlockHead](https://blockhead.info/apps)
+35. [Web3Auth - Examples](https://web3auth.io/docs/examples?product=Core+Kit&sdk=Single+Factor+Auth+Web+SDK)
+36. [pnp-modal-playground.vercel.app](https://pnp-modal-playground.vercel.app/)
+37. [Web3Auth pnp-modal-playground Samplecode](https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/react-modal-playground)
