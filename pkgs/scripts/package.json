@@ -4,7 +4,8 @@
   "private": true,
   "description": "",
   "scripts": {
-    "simpleChat": "ts-node simpleLlmChat.ts"
+    "simpleChat": "ts-node simpleLlmChat.ts",
+    "createAAWallet": "ts-node biconomy.ts"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,9 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@biconomy/account": "4.1.1",
+    "dotenv": "^16.4.4",
     "ethers": "^6.11.1",
-    "dotenv": "^16.4.4"
+    "viem": "^2.21.1"
   }
 }
