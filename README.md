@@ -222,3 +222,4 @@ Responsible Web3
 36. [pnp-modal-playground.vercel.app](https://pnp-modal-playground.vercel.app/)
 37. [Web3Auth pnp-modal-playground Samplecode](https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/react-modal-playground)
 38. [Decoding EntryPoint code line by line](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part2)
+39. [GitHub - galadriel-ai/teeML](https://github.com/galadriel-ai/teeML)
