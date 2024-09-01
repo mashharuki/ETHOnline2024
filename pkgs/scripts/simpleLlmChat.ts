@@ -3,6 +3,7 @@ import {decodeFunctionData, encodeFunctionData} from "viem";
 import {baseSepolia} from "viem/chains";
 import ABI from "./abis/OpenAiSimpleLLM.json";
 import {createAAWallet, createMintNFTUserOp} from "./biconomy";
+import {createCrossChainMintNFTTransaction} from "./chainlink-ccip";
 
 require("dotenv").config();
 
@@ -106,7 +107,7 @@ async function main() {
   const {smartWallet, saAddress} = await createAAWallet();
 
   // base sepolia
-  const NFT_ADDRESS = "0x149920786500a12da84185df4b4aaabe975df5f8";
+  const NFT_ADDRESS = process.env.NFT_ADDRESS;
 
   const abi = [
     {
@@ -181,6 +182,34 @@ async function main() {
 
   // send userOp
   //await sendUserOp(smartWallet, txData);
+
+  // ##################################  ここからクロスチェーンTxを解析させるロジック  ##################################
+
+  const cretedCrossChainTxData = await createCrossChainMintNFTTransaction();
+
+  const message3 = `
+    You are an expert in blockchain analysis.
+    Please analyze the following blockchain transaction data and provide a detailed natural language description. 
+    This Transaction is a CrossChain Transaction for minting an NFT.
+
+    The description should include:
+
+    - The type of transaction (e.g., transfer, contract execution, staking).
+    - The sender and receiver addresses.
+    - The amount of cryptocurrency or tokens involved, including the currency type.
+    - Any associated fees or costs.
+    - The date and time of the transaction.
+    - Any relevant contract details, if applicable.
+    - The purpose or intent behind the transaction, if identifiable.
+
+    Here is a transaction data:
+    ${JSON.stringify(cretedCrossChainTxData)}
+
+    [output]
+  `;
+
+  // Call the sendMessage function of SIMPLE_LLM_CONTRACT_ADDRESS
+  await analyzeTxData(contract, message3);
 }
 
 main();
