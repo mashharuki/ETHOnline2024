@@ -28,9 +28,9 @@ Responsible Web3
 
 - ### Galadriel
 
-  | Name | Address | Memo |
-  | ---- | ------- | ---- |
-  |      |         |      |
+  | Name  | Address                                    | Memo |
+  | ----- | ------------------------------------------ | ---- |
+  | Agent | 0xEf9310Ec551024585b1a290B286276B58d795EFc |      |
 
 ## How to work
 
@@ -223,3 +223,4 @@ Responsible Web3
 37. [Web3Auth pnp-modal-playground Samplecode](https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/react-modal-playground)
 38. [Decoding EntryPoint code line by line](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part2)
 39. [GitHub - galadriel-ai/teeML](https://github.com/galadriel-ai/teeML)
+40. [Galadriel Docs - AI Agents](https://docs.galadriel.com/tutorials/agents)

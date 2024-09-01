@@ -1,9 +1,5 @@
 import {Contract, ethers, Wallet} from "ethers";
-import {decodeFunctionData, encodeFunctionData} from "viem";
-import {baseSepolia} from "viem/chains";
-import ABI from "./abis/OpenAiSimpleLLM.json";
-import {createAAWallet, createMintNFTUserOp} from "./biconomy";
-import {createCrossChainMintNFTTransaction} from "./chainlink-ccip";
+import ABI from "../abis/OpenAiSimpleLLM.json";
 
 require("dotenv").config();
 
@@ -17,21 +13,24 @@ export const analyzeTxData = async (contract: any, message: string) => {
   console.log(`Message sent, tx hash: ${receipt.hash}`);
   console.log(`Chat started with message: "${message}"`);
 
+  let result = "";
   // Read the LLM response on-chain
   while (true) {
     const response = await contract.response();
     if (response) {
       console.log("Response from contract:", response);
+      result = response;
       break;
     }
     await new Promise((resolve) => setTimeout(resolve, 2000));
   }
+  return result;
 };
 
 /**
  * トランザクションデータを組み立てるメソッド
  */
-const createTxData = async (wallet: Wallet) => {
+export const createTxData = async (wallet: Wallet) => {
   const to = "0x1431ea8af860C3862A919968C71f901aEdE1910E";
   const value = ethers.parseEther("0.01");
   // create a transaction
@@ -70,6 +69,8 @@ async function main() {
   const contractAddress = process.env.SIMPLE_LLM_CONTRACT_ADDRESS;
   if (!contractAddress)
     throw Error("Missing SIMPLE_LLM_CONTRACT_ADDRESS in .env");
+  const agentAddress = process.env.AGENT_CONTRACT_ADDRESS;
+  if (!agentAddress) throw Error("Missing AGENT_CONTRACT_ADDRESS in .env");
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new Wallet(privateKey, provider);
@@ -92,6 +93,9 @@ async function main() {
     - Any relevant contract details, if applicable.
     - The purpose or intent behind the transaction, if identifiable.
 
+    The data to be analyzed is only this transaction data. 
+    It is separate from the transaction data analyzed previously.
+
     Here is a transaction data:
     ${JSON.stringify(tx)}
 
@@ -99,10 +103,31 @@ async function main() {
   `;
 
   // Call the sendMessage function of SIMPLE_LLM_CONTRACT_ADDRESS
-  await analyzeTxData(contract, message);
+  const result = await analyzeTxData(contract, message);
+
+  const message4 = `
+    Based on the following analysis results, please describe the transaction processing flow using Mermaid syntax (Flow).
+
+    like this:
+    
+    flowchart TD
+      A[Christmas] -->|Get money| B(Go shopping)
+      B --> C{Let me think}
+      C -->|One| D[Laptop]
+      C -->|Two| E[iPhone]
+      C -->|Three| F[fa:fa-car Car]
+
+    [analysis results]
+    ${result}
+
+    [output]
+  `;
+
+  // Call the sendMessage function of SIMPLE_LLM_CONTRACT_ADDRESS
+  await analyzeTxData(contract, message4);
 
   // ##################################  ここからはAAのuserOpを解析させるロジック  ##################################
-
+  /*
   // createAAWallet
   const {smartWallet, saAddress} = await createAAWallet();
 
@@ -210,6 +235,7 @@ async function main() {
 
   // Call the sendMessage function of SIMPLE_LLM_CONTRACT_ADDRESS
   await analyzeTxData(contract, message3);
+  */
 }
 
 main();
