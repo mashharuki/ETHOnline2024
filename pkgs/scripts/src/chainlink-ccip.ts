@@ -1,5 +1,5 @@
 import {Contract, ethers, Wallet} from "ethers";
-import SourceMinterABI from "./abis/SourceMinter.json";
+import SourceMinterABI from "../abis/SourceMinter.json";
 
 const privateKey = process.env.PRIVATE_KEY;
 const sepoliaRpcUrl = process.env.SEPOLIA_RPC_URL;

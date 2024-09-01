@@ -4,9 +4,9 @@
   "private": true,
   "description": "",
   "scripts": {
-    "simpleChat": "ts-node simpleLlmChat.ts",
-    "createAAWallet": "ts-node biconomy.ts",
-    "agent": "ts-node agent.ts"
+    "simpleChat": "ts-node ./src/simpleLlmChat.ts",
+    "createAAWallet": "ts-node ./src/biconomy.ts",
+    "agent": "ts-node ./src/agent.ts"
   },
   "author": "",
   "license": "ISC",

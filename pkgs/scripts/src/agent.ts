@@ -1,5 +1,5 @@
 import {Contract, ethers, TransactionReceipt, Wallet} from "ethers";
-import ABI from "./abis/Agent.json";
+import ABI from "../abis/Agent.json";
 import {createTxData} from "./simpleLlmChat";
 
 require("dotenv").config();
@@ -139,11 +139,24 @@ async function main() {
 
     [analysis results]
     ${assistantContents}
-
+    
     [output]
+    
   `;
 
-  await runAgent(contract, query2, maxIterations);
+  const allMessages2 = await runAgent(contract, query2, maxIterations);
+  const allMessagesString = JSON.stringify(allMessages2);
+
+  /*
+  // 正規表現で `mermaid` タグで囲まれた部分を抽出する
+  const mermaidContent = allMessagesString.match(/```mermaid([^`]+)```/);
+
+  if (mermaidContent) {
+    console.log(mermaidContent[1].trim());
+  } else {
+    console.log("No mermaid content found.");
+  }
+  */
 }
 
 /*

@@ -1,5 +1,5 @@
 import {Contract, ethers, Wallet} from "ethers";
-import ABI from "./abis/OpenAiSimpleLLM.json";
+import ABI from "../abis/OpenAiSimpleLLM.json";
 
 require("dotenv").config();
 
