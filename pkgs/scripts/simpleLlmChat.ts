@@ -30,7 +30,7 @@ export const analyzeTxData = async (contract: any, message: string) => {
 /**
  * トランザクションデータを組み立てるメソッド
  */
-const createTxData = async (wallet: Wallet) => {
+export const createTxData = async (wallet: Wallet) => {
   const to = "0x1431ea8af860C3862A919968C71f901aEdE1910E";
   const value = ethers.parseEther("0.01");
   // create a transaction
@@ -69,6 +69,8 @@ async function main() {
   const contractAddress = process.env.SIMPLE_LLM_CONTRACT_ADDRESS;
   if (!contractAddress)
     throw Error("Missing SIMPLE_LLM_CONTRACT_ADDRESS in .env");
+  const agentAddress = process.env.AGENT_CONTRACT_ADDRESS;
+  if (!agentAddress) throw Error("Missing AGENT_CONTRACT_ADDRESS in .env");
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new Wallet(privateKey, provider);
