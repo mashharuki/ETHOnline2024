@@ -78,6 +78,14 @@ Responsible Web3
 
         BICONOMY_API_KEY=""
         BICONOMY_BUNLDER_API_KEY=""
+
+        # Base Sepolia
+        NFT_ADDRESS="0x149920786500a12da84185df4b4aaabe975df5f8"
+
+        # Chainlink CCIP
+        SEPOLIA_RPC_URL="https://rpc.ankr.com/eth_sepolia"
+        DESTINATION_MINTER_ADDRESS="0xA433938c78A781E1f6c79f7F8BE2C200cb6bC046"
+        SOURCE_MINTER_ADDRESS="0x08c49b662c0c2A5D5f0560E01eE3c3fEdF8938d9"
         ```
 
 - **frontend**
