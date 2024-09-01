@@ -69,12 +69,15 @@ Responsible Web3
         CHAIN_ID=696969
         RPC_URL="https://devnet.galadriel.com/"
         PRIVATE_KEY=""
+
         CHAT_CONTRACT_ADDRESS="0x4A5e76a1aEa072BF32a71A61F52FC1f410AAd748"
         CHAT_VISION_CONTRACT_ADDRESS="0x785578B0dA5F21F8321590981E15F618BBc1915c"
         AGENT_CONTRACT_ADDRESS="0xFb09a7a940ae690Fafc59e18310c4deBF75B1B52"
         ANTROPIC_CONTRACT_ADDRESS="0x8cA1e115f96A562418968B475c1F096a8A385Ddb"
         SIMPLE_LLM_CONTRACT_ADDRESS="0xd09dFE5025FB25000aA22021F7355656cd10EB17"
-        COINMARKETCAP_API_KEY=
+
+        BICONOMY_API_KEY=""
+        BICONOMY_BUNLDER_API_KEY=""
         ```
 
 - **frontend**
@@ -165,7 +168,7 @@ Responsible Web3
 
       [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x1f389be6f625b0ed688d97c8e1ea68e74e4081aa663691269bda79b643f51172)
 
-      [Rarible Minted NFT]()
+      [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
 
 ## Sample NFT's metadata URI
 
@@ -210,3 +213,4 @@ Responsible Web3
 35. [Web3Auth - Examples](https://web3auth.io/docs/examples?product=Core+Kit&sdk=Single+Factor+Auth+Web+SDK)
 36. [pnp-modal-playground.vercel.app](https://pnp-modal-playground.vercel.app/)
 37. [Web3Auth pnp-modal-playground Samplecode](https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/react-modal-playground)
+38. [Decoding EntryPoint code line by line](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part2)
