@@ -5,5 +5,8 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     }
-  }
+  },
+  "solidity.remappings": [
+    "@layerzerolabs/=node_modules/@layerzerolabs/"
+  ]
 }
