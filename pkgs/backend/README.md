@@ -72,3 +72,5 @@ yarn backend deploy:nft --network morphTestnet
 | galadrielDevnet | BaseNft | 0xAc0DE957C2474519744270f47DEef57FFF088F60 | [https://explorer.galadriel.com/address/0xAc0DE957C2474519744270f47DEef57FFF088F60](https://explorer.galadriel.com/address/0xAc0DE957C2474519744270f47DEef57FFF088F60) |
 | chilizTestnet | BaseNft | 0xAc0DE957C2474519744270f47DEef57FFF088F60 | [https://testnet.chiliscan.com/address/0xAc0DE957C2474519744270f47DEef57FFF088F60](https://testnet.chiliscan.com/address/0xAc0DE957C2474519744270f47DEef57FFF088F60) |
 | morphTestnet | BaseNft | 0xAc0DE957C2474519744270f47DEef57FFF088F60 | [https://explorer-holesky.morphl2.io/address/0xAc0DE957C2474519744270f47DEef57FFF088F60](https://explorer-holesky.morphl2.io/address/0xAc0DE957C2474519744270f47DEef57FFF088F60) |
+| ONFT | Amoy | 0x95a8eD5026AC829C4F02c051C2553891c9fD98C7 | |
+| ONFT | Holesky | 0x4112575fF3F68f5C7ee0eAae1Fa11516105E6a3f | |
