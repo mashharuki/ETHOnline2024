@@ -196,6 +196,16 @@ Responsible Web3
 
       [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
 
+- **scripts**
+
+  - **generate NFT Image**
+
+    ```bash
+    yarn scripts generateImgAgent
+    ```
+
+    [https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png](https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png)
+
 ## Sample NFT's metadata URI
 
 [here](https://bafybeicfsjwjtdlt67nkfoxsma4cyl4zsjjyqtn27rgnpno5gr2zd5yf34.ipfs.w3s.link/sample)

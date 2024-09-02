@@ -6,7 +6,8 @@
   "scripts": {
     "simpleChat": "ts-node ./src/simpleLlmChat.ts",
     "createAAWallet": "ts-node ./src/biconomy.ts",
-    "agent": "ts-node ./src/agent.ts"
+    "agent": "ts-node ./src/agent.ts",
+    "generateImgAgent": "ts-node ./src/generateImgAgent.ts"
   },
   "author": "",
   "license": "ISC",
