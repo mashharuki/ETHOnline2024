@@ -45,3 +45,7 @@ next-env.d.ts
 **/public/worker-*.js.map
 
 .DS_Store
+
+.bls
+
+**/*.log
