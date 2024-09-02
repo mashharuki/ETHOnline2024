@@ -102,6 +102,24 @@ Responsible Web3
     yarn frontend dev
     ```
 
+  - **build frontend for blockless**
+
+    ```bash
+    yarn frontend build:bls
+    ```
+
+  - **preview frontend**
+
+    ```bash
+    yarn frontend preview:bls
+    ```
+
+  - **deploy frontend site to blockless**
+
+    ```bash
+    yarn frontend deploy:bls
+    ```
+
 - **backend**
 
   - **create contract addresses json file**
@@ -224,3 +242,4 @@ Responsible Web3
 38. [Decoding EntryPoint code line by line](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part2)
 39. [GitHub - galadriel-ai/teeML](https://github.com/galadriel-ai/teeML)
 40. [Galadriel Docs - AI Agents](https://docs.galadriel.com/tutorials/agents)
+41. [GitHub - MyENSDApp Domains.sol](https://github.com/mashharuki/MyENSDApp/blob/main/backend/contracts/Domains.sol)
