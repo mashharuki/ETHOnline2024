@@ -13,6 +13,7 @@
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
     "deploy": "hardhat run scripts/deploy.ts",
     "deploy:nft": "hardhat run scripts/deployNft.ts",
+    "deploy:MonsterNft": "hardhat run scripts/deployMonsterNft.ts",
     "deploy:TxDB": "hardhat run scripts/deploy__TxDB.ts",
     "verify": "npx hardhat verify",
     "getText": "npx hardhat getText",
@@ -21,7 +22,8 @@
     "insertData": "npx hardhat insertData",
     "deploy-destination-cross-chain-nft-minter": "npx hardhat run scripts/deploy-destination-cross-chain-nft-minter.ts",
     "deploy-source-cross-chain-nft-minter": "npx hardhat run scripts/deploy-source-cross-chain-nft-minter.ts",
-    "crossChainMint": "npx hardhat crossChainMint"
+    "crossChainMint": "npx hardhat crossChainMint",
+    "mintMonsterNft": "npx hardhat mintMonsterNft"
   },
   "dependencies": {
     "@chainlink/contracts": "0.7.1",

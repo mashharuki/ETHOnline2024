@@ -1,14 +1,17 @@
 import {Contract, ethers, Wallet} from "ethers";
-import ABI from "../abis/Agent.json";
-import {getAgentRunId, getNewMessages} from "./agent";
-import {createTxData} from "./simpleLlmChat";
+import {TransactionReceipt} from "viem";
+import ABI from "./abis/Agent.json";
 
-require("dotenv").config();
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 interface Message {
   role: string;
   content: string;
 }
+
+const {GALADRIEL_RPC_URL, PRIVATE_KEY, AGENT_CONTRACT_ADDRESS} = process.env;
 
 /**
  * AIエージェントで推論を実行するためのスクリプト
@@ -66,26 +69,16 @@ export const runAgent = async (
  * AI エージェント機能を試すスクリプト
  * @returns
  */
-async function main() {
-  const rpcUrl = process.env.RPC_URL;
-  if (!rpcUrl) throw Error("Missing RPC_URL in .env");
-  const privateKey = process.env.PRIVATE_KEY;
-  if (!privateKey) throw Error("Missing PRIVATE_KEY in .env");
-  const contractAddress = process.env.AGENT_CONTRACT_ADDRESS;
-  if (!contractAddress) throw Error("Missing AGENT_CONTRACT_ADDRESS in .env");
-
-  const provider = new ethers.JsonRpcProvider(rpcUrl);
-  const wallet = new Wallet(privateKey, provider);
+export async function generateImageFunction(prompt: string) {
   // コントラクトインスタンスを作成する。
-  const contract = new Contract(contractAddress, ABI, wallet);
-
-  const tx = await createTxData(wallet);
-
+  const provider = new ethers.JsonRpcProvider(GALADRIEL_RPC_URL);
+  const wallet = new Wallet(PRIVATE_KEY!, provider);
+  const contract = new Contract(AGENT_CONTRACT_ADDRESS!, ABI, wallet);
+  // プロンプトを作成する。
   const message = `
-    Generate an image of a monster for Web3 game.
+    Generate an image of a ${prompt}.
   `;
 
-  // The query you want to start the agent with
   // const query = await getUserInput("Agent's task: ");
   const query = message;
 
@@ -94,7 +87,55 @@ async function main() {
 
   const allMessages = await runAgent(contract, query, maxIterations);
 
-  console.log("result:", allMessages![2].content);
+  // console.log("result:", allMessages![2].content);
+  return allMessages![2].content;
 }
 
-main().then(() => console.log("Done"));
+/**
+ * getAgentRunId method
+ * @param receipt
+ * @param contract
+ * @returns
+ */
+export function getAgentRunId(receipt: TransactionReceipt, contract: Contract) {
+  let agentRunID;
+  for (const log of receipt.logs) {
+    try {
+      const parsedLog = contract.interface.parseLog(log);
+      if (parsedLog && parsedLog.name === "AgentRunCreated") {
+        // Second event argument
+        agentRunID = ethers.toNumber(parsedLog.args[1]);
+      }
+    } catch (error) {
+      // This log might not have been from your contract, or it might be an anonymous log
+      console.log("Could not parse log:", log);
+    }
+  }
+  return agentRunID;
+}
+
+/**
+ * getNewMessages method
+ * @param contract
+ * @param agentRunID
+ * @param currentMessagesCount
+ * @returns
+ */
+export async function getNewMessages(
+  contract: Contract,
+  agentRunID: number,
+  currentMessagesCount: number
+): Promise<Message[]> {
+  const messages = await contract.getMessageHistory(agentRunID);
+
+  const newMessages: Message[] = [];
+  messages.forEach((message: any, i: number) => {
+    if (i >= currentMessagesCount) {
+      newMessages.push({
+        role: message.role,
+        content: message.content[0].value,
+      });
+    }
+  });
+  return newMessages;
+}
