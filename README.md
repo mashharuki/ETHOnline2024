@@ -156,6 +156,18 @@ Responsible Web3
     yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
     ```
 
+  - **deploy MonsterNFT**
+
+    ```bash
+    yarn backend deploy:MonsterNft --network <network name>
+    ```
+
+  - **geneate Monster NFT Task**
+
+    ```bash
+    yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --prompt "dragon for web3 game" --network baseSepolia
+    ```
+
   - **TableLand**
 
     - **setAccessControl task**
