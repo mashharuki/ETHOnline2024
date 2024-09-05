@@ -1,4 +1,5 @@
-import {ethers} from "hardhat";
+import {ethers, network} from "hardhat";
+import {writeContractAddress} from "../helper/contractsJsonHelper";
 
 async function main() {
   if (!process.env.ORACLE_ADDRESS) {
@@ -14,6 +15,14 @@ async function deployTest(oracleAddress: string) {
   await contract.waitForDeployment();
 
   console.log(`Test contract deployed to ${contract.target}`);
+
+  // write Contract Address
+  writeContractAddress({
+    group: "contracts",
+    name: "Analizer",
+    value: contract.target as any,
+    network: network.name,
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

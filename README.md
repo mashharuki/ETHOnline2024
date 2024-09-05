@@ -156,6 +156,12 @@ Responsible Web3
     yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
     ```
 
+  - **deploy Analizer**
+
+    ```bash
+    yarn backend deploy:Analizer --network galadrielDevnet
+    ```
+
   - **deploy MonsterNFT**
 
     ```bash
@@ -166,6 +172,18 @@ Responsible Web3
 
     ```bash
     yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --prompt "dragon for web3 game" --network baseSepolia
+    ```
+
+  - **galadriel-whitelist Task**
+
+    ```bash
+    yarn backend galadriel-whitelist --oracleaddress 0x68EC9556830AD097D661Df2557FBCeC166a0A075 --whitelistaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8  --network galadrielDevnet
+    ```
+
+  - **galadriel-analyze Task**
+
+    ```bash
+    yarn backend galadriel-analyze --contractaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8 --model gpt-4-turbo --message "Please create a strong dragon for web3 game" --network galadrielDevnet
     ```
 
   - **TableLand**

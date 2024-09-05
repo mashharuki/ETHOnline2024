@@ -15,6 +15,7 @@
     "deploy:nft": "hardhat run scripts/deployNft.ts",
     "deploy:MonsterNft": "hardhat run scripts/deployMonsterNft.ts",
     "deploy:TxDB": "hardhat run scripts/deploy__TxDB.ts",
+    "deploy:Analizer": "hardhat run scripts/deployAnalizer.ts",
     "verify": "npx hardhat verify",
     "getText": "npx hardhat getText",
     "getAllTableData": "npx hardhat getAllTableData",
@@ -23,7 +24,9 @@
     "deploy-destination-cross-chain-nft-minter": "npx hardhat run scripts/deploy-destination-cross-chain-nft-minter.ts",
     "deploy-source-cross-chain-nft-minter": "npx hardhat run scripts/deploy-source-cross-chain-nft-minter.ts",
     "crossChainMint": "npx hardhat crossChainMint",
-    "mintMonsterNft": "npx hardhat mintMonsterNft"
+    "mintMonsterNft": "npx hardhat mintMonsterNft",
+    "galadriel-analyze": "npx hardhat galadriel-analyze",
+    "galadriel-whitelist": "npx hardhat galadriel-whitelist"
   },
   "dependencies": {
     "@chainlink/contracts": "0.7.1",

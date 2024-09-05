@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.25;
 
-import "./galadriel/interfaces/IOracle.sol";
+import "./interfaces/galadriel/IOracle.sol";
 
 contract Analizer {
   address public oracleAddress;
