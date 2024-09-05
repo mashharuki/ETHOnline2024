@@ -27,7 +27,7 @@ task("mintMonsterNft", "mintMonsterNft")
       console.log("generatedImage:", generatedImage);
 
       // mint Cross Chain NFT
-      const tx = await monsterNFT.safeMint(taskArgs.to, generatedImage);
+      const tx = await monsterNFT.safeMint(taskArgs.to);
 
       await tx.wait();
 

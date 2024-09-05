@@ -43,6 +43,7 @@ const config: HardhatUserConfig = {
             enabled: true,
             runs: 500,
           },
+          viaIR: true,
         },
       },
       {
@@ -52,11 +53,11 @@ const config: HardhatUserConfig = {
             enabled: true,
             runs: 500,
           },
+          viaIR: true,
         },
       },
     ],
   },
-  /* */
   dependencyCompiler: {
     paths: [
       "./../../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
