@@ -168,7 +168,7 @@ Responsible Web3
     yarn backend deploy:MonsterNft --network <network name>
     ```
 
-  - **geneate Monster NFT Task**
+  - **mint Monster NFT Task**
 
     ```bash
     yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --prompt "dragon for web3 game" --network baseSepolia
@@ -184,6 +184,18 @@ Responsible Web3
 
     ```bash
     yarn backend galadriel-analyze --contractaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8 --model gpt-4-turbo --message "Please create a strong dragon for web3 game" --network galadrielDevnet
+    ```
+
+  - **setParameters Task**
+
+    ```bash
+
+    ```
+
+  - **setImage Task**
+
+    ```bash
+
     ```
 
   - **TableLand**
