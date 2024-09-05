@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import RedImage from "@/assets/red-transparent.png";
 import BlueImage from "@/assets/blue-transparent.png";
+import RedImage from "@/assets/red-transparent.png";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const goToHome = (router) => {
+const goToHome = (router: any) => {
   router.push("/home");
 };
 
