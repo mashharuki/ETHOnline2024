@@ -1,0 +1,19 @@
+{
+  "type": "json_schema",
+  "name": "analysis",
+  "json_schema": {
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "complexity": {
+          "type": "number"
+        },
+        "attack": {
+          "type": "number"
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}
