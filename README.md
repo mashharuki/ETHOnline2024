@@ -248,6 +248,30 @@ Responsible Web3
 
     [https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png](https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png)
 
+- **indexer (Envio)**
+
+  [deployed indexer]()
+
+  Please run in `indexer` folder
+
+  - **install**
+
+    ```bash
+    pnpm install
+    ```
+
+  - **codegen & build**
+
+    ```bash
+    pnpm codegen && pnpm build
+    ```
+
+  - **push**
+
+    ```bash
+    git checkout -b envio && git push
+    ```
+
 ## Sample NFT's metadata URI
 
 [here](https://bafybeicfsjwjtdlt67nkfoxsma4cyl4zsjjyqtn27rgnpno5gr2zd5yf34.ipfs.w3s.link/sample)
