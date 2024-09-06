@@ -185,7 +185,7 @@ async function getUserInput(query: string): Promise<string | undefined> {
 }
 */
 
-function getAgentRunId(receipt: TransactionReceipt, contract: Contract) {
+export function getAgentRunId(receipt: TransactionReceipt, contract: Contract) {
   let agentRunID;
   for (const log of receipt.logs) {
     try {
@@ -202,7 +202,7 @@ function getAgentRunId(receipt: TransactionReceipt, contract: Contract) {
   return agentRunID;
 }
 
-async function getNewMessages(
+export async function getNewMessages(
   contract: Contract,
   agentRunID: number,
   currentMessagesCount: number

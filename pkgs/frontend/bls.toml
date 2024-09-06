@@ -1,0 +1,19 @@
+name = "frontend"
+version = "1.0.0"
+type = "site"
+content_type = "html"
+
+[deployment]
+nodes = 1
+
+[build]
+dir = ".bls"
+public_dir = "out"
+entry = "frontend_debug.wasm"
+command = "yarn build"
+
+[build_release]
+dir = ".bls"
+public_dir = "out"
+entry = "frontend.wasm"
+command = "yarn build"

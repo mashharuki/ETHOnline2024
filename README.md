@@ -102,6 +102,24 @@ Responsible Web3
     yarn frontend dev
     ```
 
+  - **build frontend for blockless**
+
+    ```bash
+    yarn frontend build:bls
+    ```
+
+  - **preview frontend**
+
+    ```bash
+    yarn frontend preview:bls
+    ```
+
+  - **deploy frontend site to blockless**
+
+    ```bash
+    yarn frontend deploy:bls
+    ```
+
 - **backend**
 
   - **create contract addresses json file**
@@ -136,6 +154,48 @@ Responsible Web3
 
     ```bash
     yarn backend verify --contract contracts/tableland/TxDB.sol:TxDB <address> --network <network name>
+    ```
+
+  - **deploy Analizer**
+
+    ```bash
+    yarn backend deploy:Analizer --network galadrielDevnet
+    ```
+
+  - **deploy MonsterNFT**
+
+    ```bash
+    yarn backend deploy:MonsterNft --network <network name>
+    ```
+
+  - **mint Monster NFT Task**
+
+    ```bash
+    yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --prompt "dragon for web3 game" --network baseSepolia
+    ```
+
+  - **galadriel-whitelist Task**
+
+    ```bash
+    yarn backend galadriel-whitelist --oracleaddress 0x68EC9556830AD097D661Df2557FBCeC166a0A075 --whitelistaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8  --network galadrielDevnet
+    ```
+
+  - **galadriel-analyze Task**
+
+    ```bash
+    yarn backend galadriel-analyze --contractaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8 --model gpt-4-turbo --message "Please create a strong dragon for web3 game" --network galadrielDevnet
+    ```
+
+  - **setParameters Task**
+
+    ```bash
+
+    ```
+
+  - **setImage Task**
+
+    ```bash
+
     ```
 
   - **TableLand**
@@ -177,6 +237,16 @@ Responsible Web3
       [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x1f389be6f625b0ed688d97c8e1ea68e74e4081aa663691269bda79b643f51172)
 
       [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
+
+- **scripts**
+
+  - **generate NFT Image**
+
+    ```bash
+    yarn scripts generateImgAgent
+    ```
+
+    [https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png](https://storage.googleapis.com/galadriel-assets/2e996b07-b391-4eef-a6dd-5baec84f4f6a.png)
 
 ## Sample NFT's metadata URI
 
@@ -224,3 +294,4 @@ Responsible Web3
 38. [Decoding EntryPoint code line by line](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part2)
 39. [GitHub - galadriel-ai/teeML](https://github.com/galadriel-ai/teeML)
 40. [Galadriel Docs - AI Agents](https://docs.galadriel.com/tutorials/agents)
+41. [GitHub - MyENSDApp Domains.sol](https://github.com/mashharuki/MyENSDApp/blob/main/backend/contracts/Domains.sol)
