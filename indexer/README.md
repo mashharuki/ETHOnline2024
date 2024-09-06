@@ -1,6 +1,5 @@
 ## Envio ERC721
 
-
 ## Install
 
 ```bash
@@ -10,11 +9,11 @@ pnpm install
 ## Build
 
 ```bash
-pnpm build
+pnpm codegen
 ```
 
 ```bash
-pnpm codegen
+pnpm build
 ```
 
 ## Run
