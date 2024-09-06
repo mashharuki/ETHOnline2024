@@ -250,7 +250,19 @@ Responsible Web3
 
 - **indexer (Envio)**
 
-  [deployed indexer]()
+  [deployed indexer Playground](https://envio.dev/app/mashharuki/ethonline2024/ef2559c/playground)
+
+  Sample query
+
+  ```gql
+  query MyQuery {
+    Transfer {
+      from_id
+      to_id
+      tokenId
+    }
+  }
+  ```
 
   Please run in `indexer` folder
 
