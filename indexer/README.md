@@ -22,5 +22,5 @@ pnpm build
 pnpm dev
 ```
 
-- access to http://localhost:4350/graphql
+- access to http://localhost:8080
 - password: `testing`
