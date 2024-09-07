@@ -1,11 +1,25 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { sampleQuery } from "@/graphql";
 import useWeb3auth from "@/hooks/useWeb3auth";
+import { useRouter } from "next/navigation";
+import { useQuery } from "urql";
 
 function App() {
   const { init, auth, login } = useWeb3auth();
   const router = useRouter();
+
+  // ========================================================================
+  // fetch query datas
+  // ========================================================================
+
+  //get attack info
+  const [result] = useQuery({
+    query: sampleQuery,
+    variables: {},
+  });
+  const { data: sameples } = result;
+
+  console.log("sameples:::", sameples);
 
   // useEffect(() => {
   //   console.log("init:::");
