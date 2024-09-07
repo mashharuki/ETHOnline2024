@@ -257,6 +257,7 @@ Responsible Web3
   ```gql
   query MyQuery {
     Transfer {
+      db_write_timestamp
       from_id
       to_id
       tokenId
