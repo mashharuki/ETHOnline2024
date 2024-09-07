@@ -1,10 +1,22 @@
 "use client";
-import { Provider as JotaiProvider } from "jotai";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import useWeb3auth from "@/hooks/useWeb3auth";
+import { GRAPHQL_ENDPOINT } from "@/utils/constants";
+import { Provider as JotaiProvider } from "jotai";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Client, Provider, cacheExchange, fetchExchange } from "urql";
 
+// create client instance for GraphQL
+const client = new Client({
+  url: GRAPHQL_ENDPOINT,
+  exchanges: [cacheExchange, fetchExchange],
+});
+
+/**
+ * Providers component
+ * @param param0
+ * @returns
+ */
 export default function Providers({ children }: { children: React.ReactNode }) {
   const { init, auth } = useWeb3auth();
   const router = useRouter();
@@ -27,5 +39,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     }
   }, [auth]);
 
-  return <JotaiProvider>{children}</JotaiProvider>;
+  return (
+    <JotaiProvider>
+      <Provider value={client}>{children}</Provider>
+    </JotaiProvider>
+  );
 }

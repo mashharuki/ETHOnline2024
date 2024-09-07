@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export",
     "build:bls": "bls sites build",
     "preview:bls": "bls sites preview",
     "deploy:bls": "bls sites deploy"
@@ -26,6 +25,7 @@
     "aws-sdk": "2.1565.0",
     "ethers": "^6.12.0",
     "framer-motion": "^11.3.31",
+    "graphql": "^16.9.0",
     "intmax-walletsdk": "0.0.4",
     "jotai": "^2.9.3",
     "next": "14.2.7",
@@ -33,6 +33,7 @@
     "react-dom": "^18",
     "react-loading-indicators": "0.1.1",
     "react-toastify": "^10.0.4",
+    "urql": "^4.1.0",
     "viem": "^2.19.1"
   },
   "devDependencies": {

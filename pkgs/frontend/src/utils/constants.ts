@@ -14,3 +14,6 @@ export const FORWARDER_CONTRACT_ADDRESS =
   "0xbfDe6e57dD7f54D496B896f6c7d551eE40d3BEB0";
 export const HELLOWORLD_CONTRACT_ADDRESS =
   "0xEbdef95c2f60D070bD5f10E9D69F55943169A108";
+// Envio GraphQL Endpoint
+export const GRAPHQL_ENDPOINT =
+  "https://indexer.bigdevenergy.link/79787e3/v1/graphql";
