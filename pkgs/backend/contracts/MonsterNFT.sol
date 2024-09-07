@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.25;
 
+import {IMonsterNFT} from "./interfaces/IMonsterNFT.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
@@ -11,34 +12,11 @@ import {Base64} from "./lib/Base64.sol";
 /**
  * @title MonsterNFT
  */
-contract MonsterNFT is ERC721, Ownable {
+contract MonsterNFT is IMonsterNFT, ERC721, Ownable {
   using Strings for uint256;
   using Strings for uint64;
 
   uint256 private _nextTokenId;
-
-  event Mint(address indexed to, uint256 indexed tokenId);
-
-  event SetParameters(
-    uint256 indexed tokenId,
-    string name,
-    string description,
-    uint256 health,
-    uint64 attack,
-    uint64 defense,
-    uint64 speed,
-    uint64 magic
-  );
-
-  struct Parameters {
-    string name;
-    string description;
-    uint256 health;
-    uint64 attack;
-    uint64 defense;
-    uint64 speed;
-    uint64 magic;
-  }
 
   mapping(uint256 => Parameters) public monsterParameters;
 
@@ -46,15 +24,20 @@ contract MonsterNFT is ERC721, Ownable {
 
   constructor() ERC721("MonsterNFT", "MNFT") Ownable(msg.sender) {}
 
-  function safeMint(address to) public {
+  function safeMint(address to) public returns (uint256) {
     uint256 tokenId = _nextTokenId++;
 
     _safeMint(to, tokenId);
 
     emit Mint(to, tokenId);
+
+    return tokenId;
   }
 
-  function setParameters(uint256 tokenId, Parameters memory params) public {
+  function setParameters(
+    uint256 tokenId,
+    Parameters memory params
+  ) public returns (uint256) {
     require(tokenId <= _nextTokenId, "Token ID does not exist");
     require(monsterParameters[tokenId].health == 0, "Already set");
 
@@ -70,6 +53,8 @@ contract MonsterNFT is ERC721, Ownable {
       params.speed,
       params.magic
     );
+
+    return tokenId;
   }
 
   function setImage(uint256 tokenId, string memory image) public {

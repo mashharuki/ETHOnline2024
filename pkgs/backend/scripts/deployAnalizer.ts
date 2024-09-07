@@ -5,11 +5,15 @@ async function main() {
     throw new Error("ORACLE_ADDRESS env variable is not set.");
   }
   const oracleAddress: string = process.env.ORACLE_ADDRESS;
-  await deployTest(oracleAddress);
+  await deployAnalyzer(oracleAddress);
 }
 
-async function deployTest(oracleAddress: string) {
-  const contract = await ethers.deployContract("Analizer", [oracleAddress], {});
+async function deployAnalyzer(oracleAddress: string) {
+  const contract = await ethers.deployContract(
+    "Analizer",
+    [oracleAddress, "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e"],
+    {}
+  );
 
   await contract.waitForDeployment();
 
