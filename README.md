@@ -171,7 +171,19 @@ Responsible Web3
   - **mint Monster NFT Task**
 
     ```bash
-    yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --prompt "dragon for web3 game" --network baseSepolia
+    yarn backend mintMonsterNft --to 0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072 --network <network name>
+    ```
+
+  - **setParameters NFT Task**
+
+    ```bash
+    yarn backend setParameters --tokenid 0 --network <network name>
+    ```
+
+  - **setImage NFT Task**
+
+    ```bash
+    yarn backend setImage --tokenid 0 --image https://bafybeihrtum5eyu6w4f3xkdvyasvdr5sj23w6r4uk5alxo7by65zgfhlne.ipfs.w3s.link/logo.png --network <network name>
     ```
 
   - **galadriel-whitelist Task**
@@ -184,18 +196,6 @@ Responsible Web3
 
     ```bash
     yarn backend galadriel-analyze --contractaddress 0x149920786500a12dA84185df4B4aAABe975Df5f8 --model gpt-4-turbo --message "Please create a strong dragon for web3 game" --network galadrielDevnet
-    ```
-
-  - **setParameters Task**
-
-    ```bash
-
-    ```
-
-  - **setImage Task**
-
-    ```bash
-
     ```
 
   - **TableLand**
@@ -237,6 +237,18 @@ Responsible Web3
       [CrossChain Mint NFT Tx](https://ccip.chain.link/msg/0x1f389be6f625b0ed688d97c8e1ea68e74e4081aa663691269bda79b643f51172)
 
       [Rarible Minted NFT](https://testnet.rarible.com/token/base/0x149920786500a12da84185df4b4aaabe975df5f8:0)
+
+    - **crossChain SetParameters**
+
+      ```bash
+      yarn backend crossChainSetParameters --destination baseSepolia --tokenid 0 --fee LINK --network sepolia
+      ```
+
+    - **crossChain setImage**
+
+      ```bash
+      yarn backend crossChainSetImage --destination baseSepolia --image https://bafybeihrtum5eyu6w4f3xkdvyasvdr5sj23w6r4uk5alxo7by65zgfhlne.ipfs.w3s.link/logo.png --tokenid 0  --fee LINK --network sepolia
+      ```
 
 - **scripts**
 

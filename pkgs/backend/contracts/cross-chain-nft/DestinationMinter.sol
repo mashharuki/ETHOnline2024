@@ -3,13 +3,13 @@ pragma solidity 0.8.20;
 
 import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol";
 import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
-import {ETHOnline2024NFT} from "./ETHOnline2024NFT.sol";
+import {MonsterNFT} from "./../MonsterNFT.sol";
 
 /**
  * DestinationMinter Contract
  */
 contract DestinationMinter is CCIPReceiver {
-  ETHOnline2024NFT nft;
+  MonsterNFT nft;
 
   event MintCallSuccessfull();
 
@@ -20,7 +20,7 @@ contract DestinationMinter is CCIPReceiver {
     address router, 
     address nftAddress
   ) CCIPReceiver(router) {
-    nft = ETHOnline2024NFT(nftAddress);
+    nft = MonsterNFT(nftAddress);
   }
 
   /**

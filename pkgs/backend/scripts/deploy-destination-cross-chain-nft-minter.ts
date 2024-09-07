@@ -11,17 +11,12 @@ async function main() {
   );
 
   // NFTメタデータURI
-  const baseUri =
-    "https://bafybeicfsjwjtdlt67nkfoxsma4cyl4zsjjyqtn27rgnpno5gr2zd5yf34.ipfs.w3s.link/sample";
+  // const baseUri = "https://bafybeicfsjwjtdlt67nkfoxsma4cyl4zsjjyqtn27rgnpno5gr2zd5yf34.ipfs.w3s.link/sample";
 
-  // NFT deploy
-  const ETHOnline2024NFT = await ethers.getContractFactory("ETHOnline2024NFT");
-  const nft = await ETHOnline2024NFT.deploy(
-    "ETHOnline2024NFT",
-    "ETHO24",
-    baseUri
-  );
-  console.log(`ETHOnline2024NFT deployed to ${nft.target}`);
+  // MonsterNFT deploy
+  const MonsterNFT = await ethers.getContractFactory("MonsterNFT");
+  const monsterNFT = await MonsterNFT.deploy();
+  console.log(` MonsterNFT deployed to ${monsterNFT.target}`);
 
   // get Router Address
   let routerAddress = "";
@@ -37,15 +32,15 @@ async function main() {
   );
   const destinationMinter = await DestinationMinter.deploy(
     routerAddress,
-    nft.target
+    monsterNFT.target
   );
   console.log(`DestinationMinter deployed to ${destinationMinter.target}`);
 
   // write Contract Address
   writeContractAddress({
     group: "contracts",
-    name: "ETHOnline2024NFT",
-    value: nft.target as any,
+    name: "MonsterNFT",
+    value: monsterNFT.target as any,
     network: network.name,
   });
 
