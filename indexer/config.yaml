@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: ERC721indexer
+description: ERC-721 indexer
+contracts:
+  - name: BaseNft
+    abi_file_path: ./abis/BaseNft.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: "Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)"
+      - event: "Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
+networks:
+  # - id: 17000 # Holesky Testnet
+  #   start_block: 2281499
+  #   contracts:
+  #     - name: BaseNft
+  #       address: "0x3784213D4D5057AF218dA4ee8149B5d35fca8e06"
+  - id: 696969 # Galadriel Devnet
+    start_block: 35087075
+    contracts:
+      - name: BaseNft
+        address: "0x4DD61E473Fd800d3147D8e4F30ae80782c964269"
+rollback_on_reorg: false

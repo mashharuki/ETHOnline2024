@@ -2,6 +2,6 @@
   "contracts": {
     "SampleForwarder": "0xAa363921A48Eac63F802C57658CdEde768B3DAe1",
     "HelloWorld": "0x2B5914De5D5166eBaa423C92BAb8518c85EAA0cb",
-    "BaseNft": "0x95a8eD5026AC829C4F02c051C2553891c9fD98C7"
+    "BaseNft": "0x3784213D4D5057AF218dA4ee8149B5d35fca8e06"
   }
 }

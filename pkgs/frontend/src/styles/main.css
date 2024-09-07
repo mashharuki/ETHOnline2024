@@ -1,0 +1,18 @@
+@import "./nes.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-lime-50 text-slate-800;
+  }
+
+  .wrapper {
+    @apply mx-auto max-w-96;
+  }
+
+  footer {
+    @apply fixed bottom-0 right-0 left-0;
+  }
+}

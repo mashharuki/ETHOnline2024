@@ -3,11 +3,11 @@ import {HardhatRuntimeEnvironment} from "hardhat/types";
 import {Analizer} from "../typechain-types";
 
 task("galadriel-whitelist", "Whitelists an address in the Oracle contract")
-  .addParam("oracleAddress", "The address of the Oracle contract")
-  .addParam("whitelistAddress", "The address to whitelist")
+  .addParam("oracleaddress", "The address of the Oracle contract")
+  .addParam("whitelistaddress", "The address to whitelist")
   .setAction(async (taskArgs, hre) => {
-    const oracleContractAddress = taskArgs.oracleAddress;
-    const whitelistAddress = taskArgs.whitelistAddress;
+    const oracleContractAddress = taskArgs.oracleaddress;
+    const whitelistAddress = taskArgs.whitelistaddress;
     const pcr0Hash =
       "5c8ce02f8c739a6578886ef009dc27dc69ac85a631689b093f75f6ae238e10d70a08dce8f0cafdd1f7d9b3a26c889565";
 
@@ -36,11 +36,11 @@ task("galadriel-whitelist", "Whitelists an address in the Oracle contract")
   });
 
 task("galadriel-analyze", "Calls the OpenAI LLM")
-  .addParam("contractAddress", "The address of the Test contract")
+  .addParam("contractaddress", "The address of the Test contract")
   .addParam("model", "The model to use")
   .addParam("message", "The message to send to the model")
   .setAction(async (taskArgs, hre) => {
-    const contractAddress = taskArgs.contractAddress;
+    const contractAddress = taskArgs.contractaddress;
     const model = taskArgs.model;
     const message = taskArgs.message;
 
