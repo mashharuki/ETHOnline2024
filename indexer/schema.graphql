@@ -3,8 +3,9 @@ type Account {
   id: ID!
   # approvals are a list of approvals that this account has given
   approvals: [Approval!]! @derivedFrom(field: "owner")
-  # account balance of tokens
+  # account balanceof tokens
   balance: BigInt!
+  transfers: [Transfer!]! @derivedFrom(field: "from")
 }
 
 type Transfer {
