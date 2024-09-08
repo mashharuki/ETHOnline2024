@@ -249,6 +249,12 @@ It's an innovative idea for an Autonomous World (AW), where AI analyzes past tra
     yarn backend setImage --tokenid 0 --image https://bafybeihrtum5eyu6w4f3xkdvyasvdr5sj23w6r4uk5alxo7by65zgfhlne.ipfs.w3s.link/logo.png --network <network name>
     ```
 
+  - **getTokenURI of MonsterNFT**
+
+    ```bash
+    yarn backend getTokenURI --tokenid 0 --network <network name>
+    ```
+
   - **galadriel-whitelist Task**
 
     ```bash

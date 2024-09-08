@@ -29,6 +29,7 @@
     "mintMonsterNft": "npx hardhat mintMonsterNft",
     "setParameters": "npx hardhat setParameters",
     "setImage": "npx hardhat setImage",
+    "getTokenURI": "npx hardhat getTokenURI",
     "galadriel-analyze": "npx hardhat galadriel-analyze",
     "galadriel-whitelist": "npx hardhat galadriel-whitelist"
   },
