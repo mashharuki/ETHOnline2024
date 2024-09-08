@@ -1,0 +1,3 @@
+[submodule "galadriel-contracts"]
+	path = galadriel-contracts
+	url = https://github.com/yu23ki14/galadriel-contracts
