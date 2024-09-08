@@ -34,7 +34,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  //output: "export",
   images: {
     domains: [
       "bafybeigmzj3hktgmjpbsl6akvlmucgrwedvajhp4ehjhtvuwdoexjy2hci.ipfs.dweb.link",
