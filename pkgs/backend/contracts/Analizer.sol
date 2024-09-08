@@ -2,17 +2,28 @@
 
 pragma solidity ^0.8.25;
 
-import "./interfaces/galadriel/IOracle.sol";
+import {IAnalizer} from "./interfaces/IAnalizer.sol";
+import {IGaladrielOracle} from "./interfaces/IGaladrielOracle.sol";
+import {IMonsterNFT} from "./interfaces/IMonsterNFT.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import "hardhat/console.sol";
 
-contract Analizer {
+contract Analizer is IAnalizer {
   address public oracleAddress;
-  IOracle.Message llmMessage;
-  string public lastResponse;
-  string public lastError;
-  uint private callsCount;
 
-  constructor(address _oracleAddress) {
+  IMonsterNFT public monsterNFT;
+
+  IGaladrielOracle.Message llmMessage;
+
+  uint256 private callsCount;
+
+  mapping(uint256 => address) public callers;
+
+  mapping(uint256 => uint256) public callIdToTokenId;
+
+  constructor(address _oracleAddress, address _monsterNFTAddress) {
     oracleAddress = _oracleAddress;
+    monsterNFT = IMonsterNFT(_monsterNFTAddress);
   }
 
   modifier onlyOracle() {
@@ -24,33 +35,29 @@ contract Analizer {
     oracleAddress = newOracleAddress;
   }
 
-  function callFunction(
-    string memory name,
-    string memory message
-  ) public returns (uint i) {
-    uint currentId = callsCount;
-    callsCount = currentId + 1;
-
-    lastResponse = "";
-    lastError = "";
-
-    IOracle(oracleAddress).createFunctionCall(currentId, name, message);
-
-    return currentId;
+  function setMonsterNFTAddress(address newMonsterNFTAddress) public {
+    monsterNFT = IMonsterNFT(newMonsterNFTAddress);
   }
 
-  function callOpenAiLLM(
-    string memory model,
-    string memory message
-  ) public returns (uint i) {
-    uint currentId = callsCount;
+  function getMessageHistory(
+    uint256 callId
+  ) public view returns (IGaladrielOracle.Message[] memory) {
+    IGaladrielOracle.Message[] memory messages = new IGaladrielOracle.Message[](
+      1
+    );
+    messages[0] = llmMessage;
+    return messages;
+  }
+
+  function analyze(string memory message) public returns (uint256) {
+    uint256 currentId = callsCount;
     callsCount = currentId + 1;
 
-    llmMessage = IOracle.Message({
+    llmMessage = IGaladrielOracle.Message({
       role: "user",
-      content: new IOracle.Content[](1)
+      content: new IGaladrielOracle.Content[](1)
     });
-    llmMessage.content[0] = IOracle.Content({
+    llmMessage.content[0] = IGaladrielOracle.Content({
       contentType: "text",
       value: string(
         abi.encodePacked(
@@ -59,18 +66,17 @@ contract Analizer {
         )
       )
     });
-    lastResponse = "";
-    lastError = "";
+    callers[currentId] = msg.sender;
 
-    IOracle(oracleAddress).createOpenAiLlmCall(
+    IGaladrielOracle(oracleAddress).createOpenAiLlmCall(
       currentId,
-      IOracle.OpenAiRequest({
-        model: model,
+      IGaladrielOracle.OpenAiRequest({
+        model: "gpt-4-turbo",
         frequencyPenalty: 21, // > 20 for null
         logitBias: "", // empty str for null
         maxTokens: 1000, // 0 for null
         presencePenalty: 21, // > 20 for null
-        responseFormat: '{"type":"json_schema","json_schema":{"name":"analysis","strict":true,"schema":{"type":"object","properties":{"analysis":{"type":"string"},"complexity":{"type":"number"},"attack":{"type":"number"}}}}}',
+        responseFormat: '{"type":"text"}',
         seed: 0, // null
         stop: "", // null
         temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
@@ -84,60 +90,108 @@ contract Analizer {
     return currentId;
   }
 
-  function getMessageHistory(
-    uint /*chatId*/
-  ) public view returns (IOracle.Message[] memory) {
-    IOracle.Message[] memory messages = new IOracle.Message[](1);
-    messages[0] = llmMessage;
-    return messages;
+  function _requestGenerateImage(
+    uint256 callId,
+    IMonsterNFT.Parameters memory parameters
+  ) private {
+    IGaladrielOracle(oracleAddress).createFunctionCall(
+      callId,
+      "image_generation",
+      string(
+        abi.encodePacked(
+          "Generate a monster image from this parameters name: ",
+          parameters.name,
+          " description: ",
+          parameters.description,
+          " health: ",
+          Strings.toString(parameters.health),
+          " attack: ",
+          Strings.toString(parameters.attack),
+          " defense: ",
+          Strings.toString(parameters.defense),
+          " speed: ",
+          Strings.toString(parameters.speed),
+          " magic: ",
+          Strings.toString(parameters.magic)
+        )
+      )
+    );
   }
 
   function onOracleFunctionResponse(
-    uint /*runId*/,
+    uint256 callId,
     string memory response,
     string memory errorMessage
   ) public onlyOracle {
-    lastResponse = response;
-    lastError = errorMessage;
-  }
-
-  function onOracleKnowledgeBaseQueryResponse(
-    uint /*runId*/,
-    string[] memory documents,
-    string memory errorMessage
-  ) public onlyOracle {
-    string memory newContent = "";
-    for (uint i = 0; i < documents.length; i++) {
-      newContent = string(abi.encodePacked(newContent, documents[i], "\n"));
+    if (bytes(errorMessage).length > 0) {
+      return;
     }
-    lastResponse = newContent;
-    lastError = errorMessage;
-  }
 
-  function onOracleLlmResponse(
-    uint /*runId*/,
-    IOracle.LlmResponse memory response,
-    string memory errorMessage
-  ) public onlyOracle {
-    lastResponse = response.content;
-    lastError = errorMessage;
+    uint256 tokenId = callIdToTokenId[callId];
+
+    monsterNFT.setImage(tokenId, response);
   }
 
   function onOracleOpenAiLlmResponse(
-    uint /*runId*/,
-    IOracle.OpenAiResponse memory response,
+    uint256 callId,
+    IGaladrielOracle.OpenAiResponse memory response,
     string memory errorMessage
   ) public onlyOracle {
-    lastResponse = response.content;
-    lastError = errorMessage;
+    console.log("test");
+    if (bytes(errorMessage).length > 0) {
+      return;
+    }
+
+    // AnalysisResult memory analysisResult = _parseAnalysisResult(
+    //   response.content
+    // );
+
+    AnalysisResult memory analysisResult = AnalysisResult({
+      data: AnalysisData({
+        targetContract: address(this),
+        functionName: "0x",
+        description: "0x",
+        value: 0,
+        complexity: 0,
+        riskLevel: 0
+      }),
+      monsterParameters: IMonsterNFT.Parameters({
+        name: "Water Dragon",
+        description: "A dragon that can control water.",
+        health: 100,
+        attack: 0,
+        defense: 0,
+        speed: 0,
+        magic: 0
+      })
+    });
+
+    uint256 tokenId = monsterNFT.safeMint(callers[callId]);
+
+    callIdToTokenId[callId] = tokenId;
+
+    monsterNFT.setParameters(tokenId, analysisResult.monsterParameters);
+    _requestGenerateImage(callId, analysisResult.monsterParameters);
+
+    emit Analized(
+      callId,
+      analysisResult.data.targetContract,
+      analysisResult.data.functionName,
+      analysisResult.data.description,
+      analysisResult.data.value,
+      analysisResult.data.complexity,
+      analysisResult.data.riskLevel
+    );
   }
 
-  function onOracleGroqLlmResponse(
-    uint /*runId*/,
-    IOracle.GroqResponse memory response,
-    string memory errorMessage
-  ) public onlyOracle {
-    lastResponse = response.content;
-    lastError = errorMessage;
+  function _parseAnalysisResult(
+    bytes memory content
+  ) private pure returns (AnalysisResult memory) {
+    (
+      AnalysisData memory data,
+      IMonsterNFT.Parameters memory monsterParameters
+    ) = abi.decode(content, (AnalysisData, IMonsterNFT.Parameters));
+
+    return AnalysisResult({data: data, monsterParameters: monsterParameters});
   }
 }

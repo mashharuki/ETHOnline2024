@@ -1,7 +1,7 @@
 import {SignerWithAddress} from "@nomicfoundation/hardhat-ethers/signers";
-import {MonsterNFT} from "../typechain-types";
 import {ethers} from "hardhat";
 import {expect} from "chai";
+import {IMonsterNFT, MonsterNFT} from "../typechain-types";
 
 describe("MonsterNFT", () => {
   let monsterNFT: MonsterNFT;
@@ -26,7 +26,7 @@ describe("MonsterNFT", () => {
   });
 
   it("should set parameters", async () => {
-    const parameters_1: MonsterNFT.ParametersStruct = {
+    const parameters_1: IMonsterNFT.ParametersStruct = {
       name: "monster1",
       description: "description1",
       health: 100,
@@ -56,9 +56,6 @@ describe("MonsterNFT", () => {
 
   it("should return tokenURI as base64", async () => {
     const tokenURI = await monsterNFT.tokenURI(0);
-    console.log(
-      Buffer.from(tokenURI.split(",")[1], "base64").toString("utf-8")
-    );
     const decodedTokenURI = JSON.parse(
       Buffer.from(tokenURI.split(",")[1], "base64").toString("utf-8")
     );

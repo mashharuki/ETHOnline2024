@@ -60,7 +60,7 @@ const config: HardhatUserConfig = {
   },
   dependencyCompiler: {
     paths: [
-      "./../../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
+      // "./../../../../node_modules/@tableland/evm/contracts/TablelandTables.sol",
     ],
   },
   networks: {
@@ -106,6 +106,7 @@ const config: HardhatUserConfig = {
     apiKey: {
       sepolia: ETHERSCAN_API_KEY!,
       morphTestnet: "anything",
+      galadrielDevnet: "anything",
     },
     customChains: [
       {
@@ -114,6 +115,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://explorer-api-holesky.morphl2.io/api? ",
           browserURL: "https://explorer-holesky.morphl2.io/",
+        },
+      },
+      {
+        network: "galadrielDevnet",
+        chainId: 696969,
+        urls: {
+          apiURL: "https://explorer.galadriel.com/api",
+          browserURL: "https://explorer.galadriel.com",
         },
       },
     ],
