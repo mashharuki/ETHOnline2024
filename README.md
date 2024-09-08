@@ -75,9 +75,17 @@ It's an innovative idea for an Autonomous World (AW), where AI analyzes past tra
 
 - ### Sepolia
 
-  | Name | Address | Memo |
-  | ---- | ------- | ---- |
-  |      |         |      |
+  | Name         | Address                                    | Memo |
+  | ------------ | ------------------------------------------ | ---- |
+  | SourceMinter | 0xF6C348b8bd2de448CeC56277D6eFf851b6FfCa66 | CCIP |
+
+- ### BaseSepolia
+
+  | Name              | Address                                    | Memo |
+  | ----------------- | ------------------------------------------ | ---- |
+  | DestinationMinter | 0xb27E2b20054b9ce343eA51eEd335891d6D0831ca | CCIP |
+  | MonsterNFT        | 0x02fc35AcD83AB0F7d802224B0A13f1462C2C05EA |      |
+  |                   |                                            |      |
 
 - ### Galadriel
 
