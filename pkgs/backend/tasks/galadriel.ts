@@ -1,9 +1,6 @@
 import * as dotenv from "dotenv";
 import {task} from "hardhat/config";
-import {HardhatRuntimeEnvironment} from "hardhat/types";
 import {loadDeployedContractAddresses} from "../helper/contractsJsonHelper";
-import {Analizer} from "../typechain-types";
-import AnalizerABI from "./../lib/galadriel/abis/Analizer.json";
 
 dotenv.config();
 
@@ -54,17 +51,8 @@ task("galadriel-analyze", "Calls the OpenAI LLM")
       contracts: {Analizer},
     } = loadDeployedContractAddresses(hre.network.name);
 
-    // getSigner
-    const [signer] = await hre.ethers.getSigners();
-    // provider
-    const provider = new hre.ethers.JsonRpcProvider(
-      process.env.GALADRIEL_RPC_URL!
-    );
-
-    signer.connect(provider);
-
-    const contract = new hre.ethers.Contract(Analizer, AnalizerABI, signer);
-    // const response = await queryOpenAiLLM(contract, model, message, hre);
+    // create TxDB contract
+    const contract = await hre.ethers.getContractAt("Analizer", Analizer);
 
     const tx = await contract.analyze(message);
     await tx.wait();
@@ -72,6 +60,7 @@ task("galadriel-analyze", "Calls the OpenAI LLM")
     console.log("tx reponse: ", tx);
   });
 
+/*
 async function queryOpenAiLLM(
   contract: Analizer,
   model: string,
@@ -94,6 +83,7 @@ async function queryOpenAiLLM(
   }
   return {response: "", error: "Call failed"};
 }
+*/
 
 function checkResult(result: any): any {
   if (process.env.RUN_MODE != "e2e-script") {
