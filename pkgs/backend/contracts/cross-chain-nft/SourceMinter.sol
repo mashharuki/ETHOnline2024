@@ -16,6 +16,16 @@ contract SourceMinter is Withdraw {
     LINK
   }
 
+  struct Parameters {
+    string name;
+    string description;
+    uint256 health;
+    uint64 attack;
+    uint64 defense;
+    uint64 speed;
+    uint64 magic;
+  }
+
   address immutable i_router;
   address immutable i_link;
 
@@ -47,7 +57,7 @@ contract SourceMinter is Withdraw {
     // create send data
     Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
       receiver: abi.encode(receiver),
-      data: abi.encodeWithSignature("mint(address)", to),
+      data: abi.encodeWithSignature("safeMint(address)", to),
       tokenAmounts: new Client.EVMTokenAmount[](0),
       extraArgs: "",
       feeToken: payFeesIn == PayFeesIn.LINK ? i_link : address(0)
@@ -61,6 +71,7 @@ contract SourceMinter is Withdraw {
 
     bytes32 messageId;
 
+    // send CCIP message
     if (payFeesIn == PayFeesIn.LINK) {
       // LinkTokenInterface(i_link).approve(i_router, fee);
       messageId = IRouterClient(i_router).ccipSend(
@@ -74,6 +85,98 @@ contract SourceMinter is Withdraw {
       );
     }
 
+    // emit event
     emit MessageSent(messageId);
   }
+
+  /**
+   * call receiver's setParameters method
+   */
+  function setParameters(
+    uint64 destinationChainSelector,
+    address receiver,
+    uint256 tokenId, 
+    Parameters memory params,
+    PayFeesIn payFeesIn
+  ) external {
+    // create send data
+    Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
+      receiver: abi.encode(receiver),
+      data: abi.encodeWithSignature("setParameters(uint256, Parameters)", tokenId, params),
+      tokenAmounts: new Client.EVMTokenAmount[](0),
+      extraArgs: "",
+      feeToken: payFeesIn == PayFeesIn.LINK ? i_link : address(0)
+    });
+
+    // calc fee
+    uint256 fee = IRouterClient(i_router).getFee(
+      destinationChainSelector,
+      message
+    );
+
+    bytes32 messageId;
+
+    // send CCIP message
+    if (payFeesIn == PayFeesIn.LINK) {
+      // LinkTokenInterface(i_link).approve(i_router, fee);
+      messageId = IRouterClient(i_router).ccipSend(
+        destinationChainSelector,
+        message
+      );
+    } else {
+      messageId = IRouterClient(i_router).ccipSend{value: fee}(
+        destinationChainSelector,
+        message
+      );
+    }
+
+    // emit event
+    emit MessageSent(messageId);
+  }
+
+  /**
+   * call receiver's setImage method
+   */
+  function setImage(
+    uint64 destinationChainSelector,
+    address receiver,
+    uint256 tokenId, 
+    string memory image,
+    PayFeesIn payFeesIn
+  ) external {
+    // create send data
+    Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
+      receiver: abi.encode(receiver),
+      data: abi.encodeWithSignature("setImage(uint256, string)", tokenId, image),
+      tokenAmounts: new Client.EVMTokenAmount[](0),
+      extraArgs: "",
+      feeToken: payFeesIn == PayFeesIn.LINK ? i_link : address(0)
+    });
+
+    // calc fee
+    uint256 fee = IRouterClient(i_router).getFee(
+      destinationChainSelector,
+      message
+    );
+
+    bytes32 messageId;
+
+    // send CCIP message
+    if (payFeesIn == PayFeesIn.LINK) {
+      // LinkTokenInterface(i_link).approve(i_router, fee);
+      messageId = IRouterClient(i_router).ccipSend(
+        destinationChainSelector,
+        message
+      );
+    } else {
+      messageId = IRouterClient(i_router).ccipSend{value: fee}(
+        destinationChainSelector,
+        message
+      );
+    }
+
+    // emit event
+    emit MessageSent(messageId);
+  }
+
 }

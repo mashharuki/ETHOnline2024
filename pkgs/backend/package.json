@@ -24,7 +24,11 @@
     "deploy-destination-cross-chain-nft-minter": "npx hardhat run scripts/deploy-destination-cross-chain-nft-minter.ts",
     "deploy-source-cross-chain-nft-minter": "npx hardhat run scripts/deploy-source-cross-chain-nft-minter.ts",
     "crossChainMint": "npx hardhat crossChainMint",
+    "crossChainSetParameters": "npx hardhat crossChainSetParameters",
+    "crossChainSetImage": "npx hardhat crossChainSetImage",
     "mintMonsterNft": "npx hardhat mintMonsterNft",
+    "setParameters": "npx hardhat setParameters",
+    "setImage": "npx hardhat setImage",
     "galadriel-analyze": "npx hardhat galadriel-analyze",
     "galadriel-whitelist": "npx hardhat galadriel-whitelist"
   },
