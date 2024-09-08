@@ -28,9 +28,11 @@ Responsible Web3
 
 - ### Galadriel
 
-  | Name  | Address                                    | Memo |
-  | ----- | ------------------------------------------ | ---- |
-  | Agent | 0xEf9310Ec551024585b1a290B286276B58d795EFc |      |
+  | Name       | Address                                    | Memo |
+  | ---------- | ------------------------------------------ | ---- |
+  | Agent      | 0xEf9310Ec551024585b1a290B286276B58d795EFc |      |
+  | Analizer   | 0x8E25DDF6744f46e6BD2C021499E5a1A48312329D |      |
+  | MonsterNFT | 0xdC00bE7034C949053713117bc6FA3F4897C9c033 |      |
 
 ## How to work
 
