@@ -55,6 +55,8 @@ export const createMintNFTUserOp = async (
     paymasterServiceData: {mode: PaymasterMode.SPONSORED},
   });
 
+  console.log("UserOp", builtUserOp);
+
   return builtUserOp;
 };
 
