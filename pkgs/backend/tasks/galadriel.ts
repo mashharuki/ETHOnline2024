@@ -1,6 +1,11 @@
+import * as dotenv from "dotenv";
 import {task} from "hardhat/config";
 import {HardhatRuntimeEnvironment} from "hardhat/types";
+import {loadDeployedContractAddresses} from "../helper/contractsJsonHelper";
 import {Analizer} from "../typechain-types";
+import AnalizerABI from "./../lib/galadriel/abis/Analizer.json";
+
+dotenv.config();
 
 task("galadriel-whitelist", "Whitelists an address in the Oracle contract")
   .addParam("oracleaddress", "The address of the Oracle contract")
@@ -36,21 +41,35 @@ task("galadriel-whitelist", "Whitelists an address in the Oracle contract")
   });
 
 task("galadriel-analyze", "Calls the OpenAI LLM")
-  .addParam("contractaddress", "The address of the Test contract")
-  .addParam("model", "The model to use")
+  //.addParam("contractaddress", "The address of the Test contract")
+  //.addParam("model", "The model to use")
   .addParam("message", "The message to send to the model")
   .setAction(async (taskArgs, hre) => {
-    const contractAddress = taskArgs.contractaddress;
-    const model = taskArgs.model;
+    // const contractAddress = taskArgs.contractaddress;
+    // const model = taskArgs.model;
     const message = taskArgs.message;
 
-    const contract = await hre.ethers.getContractAt(
-      "Analizer",
-      contractAddress
-    );
-    const response = await queryOpenAiLLM(contract, model, message, hre);
+    // get Contract Address
+    const {
+      contracts: {Analizer},
+    } = loadDeployedContractAddresses(hre.network.name);
 
-    return checkResult(response);
+    // getSigner
+    const [signer] = await hre.ethers.getSigners();
+    // provider
+    const provider = new hre.ethers.JsonRpcProvider(
+      process.env.GALADRIEL_RPC_URL!
+    );
+
+    signer.connect(provider);
+
+    const contract = new hre.ethers.Contract(Analizer, AnalizerABI, signer);
+    // const response = await queryOpenAiLLM(contract, model, message, hre);
+
+    const tx = await contract.analyze(message);
+    await tx.wait();
+
+    console.log("tx reponse: ", tx);
   });
 
 async function queryOpenAiLLM(
