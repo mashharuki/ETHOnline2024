@@ -1,6 +1,6 @@
-import {useAtom} from "jotai";
 import {authAtom} from "@/store";
 import {web3auth} from "@/utils/web3auth";
+import {useAtom} from "jotai";
 
 export default function useWeb3auth() {
   const [auth, setAuth] = useAtom(authAtom);
@@ -25,5 +25,13 @@ export default function useWeb3auth() {
     });
   };
 
-  return {init, auth, login};
+  const logout = async () => {
+    await web3auth.logout();
+    setAuth({
+      isLoggedIn: false,
+      provider: null,
+    });
+  };
+
+  return {init, auth, login, logout};
 }

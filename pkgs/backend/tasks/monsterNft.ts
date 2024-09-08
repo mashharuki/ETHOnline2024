@@ -126,17 +126,7 @@ task("getTokenURI", "getTokenURI of MonsterNFT")
 
       spinner.stop();
       console.log(`✅  tokenURI: ${tokenURI}`);
-
       const decodedJson: any = decodeBase64Json(tokenURI);
-
-      // attributes配列
-      const attributes: any[] = [
-        {trait_type: "Health", value: 100},
-        {trait_type: "Attack", value: 0},
-        {trait_type: "Defense", value: 0},
-        {trait_type: "Speed", value: 0},
-        {trait_type: "Magic", value: 0},
-      ];
 
       /**
        * 特定のtrait_typeを持つAttributeを取得する関数

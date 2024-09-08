@@ -94,7 +94,7 @@ export const chainConfig = {
 
 export const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: {
-    chainConfig: chainConfig.sepolia,
+    chainConfig: chainConfig.galadrielDevnet,
   },
 });
 

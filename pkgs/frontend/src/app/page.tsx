@@ -2,6 +2,7 @@
 import { sampleQuery } from "@/graphql";
 import useWeb3auth from "@/hooks/useWeb3auth";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useQuery } from "urql";
 
 function App() {
@@ -26,24 +27,27 @@ function App() {
   //   init();
   // }, []);
 
-  // useEffect(() => {
-  //   console.log("auth:::", auth);
-  //   if (auth.isLoggedIn) {
-  //     router.push("/start");
-  //   }
-  // }, [auth]);
+  /* */
+  useEffect(() => {
+    console.log("auth:::", auth);
+    if (auth.isLoggedIn) {
+      router.push("/start");
+    }
+  }, [auth]);
 
   return (
     <div className="grid place-items-center px-6 min-h-screen">
       <div className="-mt-40">
         <span className="nes-badge w-full mb-16">
-          <span className="is-dark text-3xl text-center">Responsible Web3</span>
+          <span className="is-dark text-3xl text-center">
+            Mystic Decentral World
+          </span>
         </span>
         <div className="w-full flex items-center justify-center mb-14">
           <i className="nes-icon is-large like" />
         </div>
         <p className="nes-balloon from-left nes-pointer text-2xl w-full text-center overflow-wrap">
-          Responsible web3 is aaaa aaaaaa aaaaaa aaaaaa bbbbbb
+          Mystic Decentral World
         </p>
       </div>
       <footer className="footer">
