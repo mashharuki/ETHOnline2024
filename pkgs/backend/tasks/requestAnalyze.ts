@@ -8,7 +8,7 @@ task("analyze", "mintMonsterNft")
     // create MonsterNFT contract
     const analyzer = await hre.ethers.getContractAt(
       "Analizer",
-      "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0"
+      "0xbE914D66aF1D6B7C46e1dfB641E4adCb6205cFc2"
     );
 
     try {

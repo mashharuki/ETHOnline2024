@@ -1,22 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-// import "https://github.com/galadriel-ai/contracts/blob/main/contracts/contracts/interfaces/IOracle.sol";
 import "./interfaces/IOracle.sol";
 
-contract GroqSimpleLLM {
+contract OpenAiSimpleLLM {
     address private oracleAddress; // use latest: https://docs.galadriel.com/oracle-address
     IOracle.Message public message;
     bytes public response;
-    IOracle.GroqRequest private config;
+    IOracle.OpenAiRequest private config;
 
     constructor(address initialOracleAddress) {
         oracleAddress = initialOracleAddress;
 
-        config = IOracle.GroqRequest({
-            // To see supported models, visit the docs:
-            // https://docs.galadriel.com/reference/llms/groq#groqrequest-object
-            model: "llama-3.1-8b-instant",
+        config = IOracle.OpenAiRequest({
+            model: "gpt-4-turbo", // gpt-4-turbo gpt-4o
             frequencyPenalty: 21, // > 20 for null
             logitBias: "", // empty str for null
             maxTokens: 1000, // 0 for null
@@ -26,23 +23,25 @@ contract GroqSimpleLLM {
             stop: "", // null
             temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
             topP: 101, // Percentage 0-100, > 100 means null
+            tools: "",
+            toolChoice: "", // "none" or "auto"
             user: "" // null
         });
     }
 
     function sendMessage(bytes memory _message) public {
         message = createTextMessage("user", _message);
-        IOracle(oracleAddress).createGroqLlmCall(0, config);
+        IOracle(oracleAddress).createOpenAiLlmCall(0, config);
     }
 
     // required for Oracle
-    function onOracleGroqLlmResponse(
-        uint /*_runId*/,
-        IOracle.GroqResponse memory _response,
+    function onOracleOpenAiLlmResponse(
+        uint runId,
+        IOracle.OpenAiResponse memory _response,
         bytes memory _errorMessage
     ) public {
         require(msg.sender == oracleAddress, "Caller is not oracle");
-        if (_errorMessage.length > 0) {
+        if (bytes(_errorMessage).length > 0) {
             response = _errorMessage;
         } else {
             response = _response.content;

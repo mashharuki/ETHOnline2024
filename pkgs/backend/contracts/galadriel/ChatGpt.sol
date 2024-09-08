@@ -8,7 +8,6 @@ import "./interfaces/IOracle.sol";
 // @title ChatGpt
 // @notice This contract handles chat interactions and integrates with teeML oracle for LLM and knowledge base queries.
 contract ChatGpt {
-
     struct ChatRun {
         address owner;
         IOracle.Message[] messages;
@@ -24,10 +23,10 @@ contract ChatGpt {
 
     // @notice Address of the contract owner
     address private owner;
-    
+
     // @notice Address of the oracle contract
     address public oracleAddress;
-    
+
     // @notice CID of the knowledge base
     string public knowledgeBase;
 
@@ -64,7 +63,7 @@ contract ChatGpt {
     // @notice Starts a new chat
     // @param message The initial message to start the chat with
     // @return The ID of the newly created chat
-    function startChat(string memory message) public returns (uint) {
+    function startChat(bytes memory message) public returns (uint) {
         ChatRun storage run = chatRuns[chatRunsCount];
 
         run.owner = msg.sender;
@@ -98,16 +97,21 @@ contract ChatGpt {
     // @dev Called by teeML oracle
     function onOracleLlmResponse(
         uint runId,
-        string memory response,
+        bytes memory response,
         string memory /*errorMessage*/
     ) public onlyOracle {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("user")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("user")),
             "No message to respond to"
         );
 
-        IOracle.Message memory newMessage = createTextMessage("assistant", response);
+        IOracle.Message memory newMessage = createTextMessage(
+            "assistant",
+            response
+        );
         run.messages.push(newMessage);
         run.messagesCount++;
     }
@@ -123,23 +127,30 @@ contract ChatGpt {
     ) public onlyOracle {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("user")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("user")),
             "No message to add context to"
         );
         // Retrieve the last user message
-        IOracle.Message storage lastMessage = run.messages[run.messagesCount - 1];
+        IOracle.Message storage lastMessage = run.messages[
+            run.messagesCount - 1
+        ];
 
         // Start with the original message content
-        string memory newContent = lastMessage.content[0].value;
+        bytes memory newContent = lastMessage.content[0].value;
 
         // Append "Relevant context:\n" only if there are documents
         if (documents.length > 0) {
-            newContent = string(abi.encodePacked(newContent, "\n\nRelevant context:\n"));
+            newContent = abi.encodePacked(
+                newContent,
+                "\n\nRelevant context:\n"
+            );
         }
 
         // Iterate through the documents and append each to the newContent
         for (uint i = 0; i < documents.length; i++) {
-            newContent = string(abi.encodePacked(newContent, documents[i], "\n"));
+            newContent = abi.encodePacked(newContent, documents[i], "\n");
         }
 
         // Finally, set the lastMessage content to the newly constructed string
@@ -152,15 +163,15 @@ contract ChatGpt {
     // @notice Adds a new message to an existing chat run
     // @param message The new message to add
     // @param runId The ID of the chat run
-    function addMessage(string memory message, uint runId) public {
+    function addMessage(bytes memory message, uint runId) public {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("assistant")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("assistant")),
             "No response to previous message"
         );
-        require(
-            run.owner == msg.sender, "Only chat owner can add messages"
-        );
+        require(run.owner == msg.sender, "Only chat owner can add messages");
 
         IOracle.Message memory newMessage = createTextMessage("user", message);
         run.messages.push(newMessage);
@@ -183,7 +194,9 @@ contract ChatGpt {
     // @param chatId The ID of the chat run
     // @return An array of messages
     // @dev Called by teeML oracle
-    function getMessageHistory(uint chatId) public view returns (IOracle.Message[] memory) {
+    function getMessageHistory(
+        uint chatId
+    ) public view returns (IOracle.Message[] memory) {
         return chatRuns[chatId].messages;
     }
 
@@ -191,7 +204,10 @@ contract ChatGpt {
     // @param role The role of the message
     // @param content The content of the message
     // @return The created message
-    function createTextMessage(string memory role, string memory content) private pure returns (IOracle.Message memory) {
+    function createTextMessage(
+        string memory role,
+        bytes memory content
+    ) private pure returns (IOracle.Message memory) {
         IOracle.Message memory newMessage = IOracle.Message({
             role: role,
             content: new IOracle.Content[](1)

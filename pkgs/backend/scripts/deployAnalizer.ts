@@ -12,7 +12,7 @@ async function main() {
 async function deployAnalyzer(oracleAddress: string) {
   const contract = await ethers.deployContract(
     "Analizer",
-    [oracleAddress, "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e"],
+    [oracleAddress, "0xdC00bE7034C949053713117bc6FA3F4897C9c033"],
     {}
   );
 

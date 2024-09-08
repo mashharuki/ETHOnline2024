@@ -104,34 +104,37 @@ describe("Analizer", () => {
   it("check nft metadata", async () => {
     const metadata = await monsterNFT.tokenURI(0);
 
+    console.log(metadata);
+
     const decodedTokenURI = JSON.parse(
       Buffer.from(metadata.split(",")[1], "base64").toString("utf-8")
     );
 
     expect(decodedTokenURI).to.deep.equal({
-      name: "hello world",
-      description: "hello world",
+      name: "Water Dragon",
+      description:
+        "Water Dragon is a powerful creature that lives in the ocean. It has the ability to control water and create powerful waves.",
       image: "https://google.com",
       attributes: [
         {
           trait_type: "Health",
-          value: 0,
+          value: 3000,
         },
         {
           trait_type: "Attack",
-          value: 0,
+          value: 50,
         },
         {
           trait_type: "Defense",
-          value: 0,
+          value: 140,
         },
         {
           trait_type: "Speed",
-          value: 0,
+          value: 100,
         },
         {
           trait_type: "Magic",
-          value: 0,
+          value: 230,
         },
       ],
     });

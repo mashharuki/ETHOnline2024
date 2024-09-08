@@ -7,7 +7,7 @@ import "./interfaces/IOracle.sol";
 contract SimpleLLM {
     address private oracleAddress; // use latest: https://docs.galadriel.com/oracle-address
     IOracle.Message public message;
-    string public response;
+    bytes public response;
     IOracle.LlmRequest private config;
 
     constructor(address initialOracleAddress) {
@@ -30,7 +30,7 @@ contract SimpleLLM {
         });
     }
 
-    function sendMessage(string memory _message) public {
+    function sendMessage(bytes memory _message) public {
         message = createTextMessage("user", _message);
         IOracle(oracleAddress).createLlmCall(0, config);
     }
@@ -39,10 +39,10 @@ contract SimpleLLM {
     function onOracleLlmResponse(
         uint /*_runId*/,
         IOracle.LlmResponse memory _response,
-        string memory _errorMessage
+        bytes memory _errorMessage
     ) public {
         require(msg.sender == oracleAddress, "Caller is not oracle");
-        if (bytes(_errorMessage).length > 0) {
+        if (_errorMessage.length > 0) {
             response = _errorMessage;
         } else {
             response = _response.content;
@@ -62,7 +62,10 @@ contract SimpleLLM {
     // @param role The role of the message
     // @param content The content of the message
     // @return The created message
-    function createTextMessage(string memory role, string memory content) private pure returns (IOracle.Message memory) {
+    function createTextMessage(
+        string memory role,
+        bytes memory content
+    ) private pure returns (IOracle.Message memory) {
         IOracle.Message memory newMessage = IOracle.Message({
             role: role,
             content: new IOracle.Content[](1)

@@ -8,7 +8,6 @@ import "./interfaces/IOracle.sol";
 // @title ChatGpt
 // @notice This contract interacts with teeML oracle to handle chat interactions using the Anthropic model.
 contract AnthropicChatGpt {
-
     struct ChatRun {
         address owner;
         IOracle.Message[] messages;
@@ -24,13 +23,13 @@ contract AnthropicChatGpt {
 
     // @notice Address of the contract owner
     address private owner;
-    
+
     // @notice Address of the oracle contract
     address public oracleAddress;
 
     // @notice Configuration for the LLM request
     IOracle.LlmRequest private config;
-    
+
     // @notice CID of the knowledge base
     string public knowledgeBase;
 
@@ -46,19 +45,19 @@ contract AnthropicChatGpt {
         oracleAddress = initialOracleAddress;
 
         config = IOracle.LlmRequest({
-            model : "claude-3-5-sonnet-20240620",
-            frequencyPenalty : 21, // > 20 for null
-            logitBias : "", // empty str for null
-            maxTokens : 1000, // 0 for null
-            presencePenalty : 21, // > 20 for null
-            responseFormat : "{\"type\":\"text\"}",
-            seed : 0, // null
-            stop : "", // null
-            temperature : 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
-            topP : 101, // Percentage 0-100, > 100 means null
-            tools : "[{\"type\":\"function\",\"function\":{\"name\":\"web_search\",\"description\":\"Search the internet\",\"parameters\":{\"type\":\"object\",\"properties\":{\"query\":{\"type\":\"string\",\"description\":\"Search query\"}},\"required\":[\"query\"]}}},{\"type\":\"function\",\"function\":{\"name\":\"code_interpreter\",\"description\":\"Evaluates python code in a sandbox environment. The environment resets on every execution. You must send the whole script every time and print your outputs. Script should be pure python code that can be evaluated. It should be in python format NOT markdown. The code should NOT be wrapped in backticks. All python packages including requests, matplotlib, scipy, numpy, pandas, etc are available. Output can only be read from stdout, and stdin. Do not use things like plot.show() as it will not work. print() any output and results so you can capture the output.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\",\"description\":\"The pure python script to be evaluated. The contents will be in main.py. It should not be in markdown format.\"}},\"required\":[\"code\"]}}}]",
-            toolChoice : "auto", // "none" or "auto"
-            user : "" // null
+            model: "claude-3-5-sonnet-20240620",
+            frequencyPenalty: 21, // > 20 for null
+            logitBias: "", // empty str for null
+            maxTokens: 1000, // 0 for null
+            presencePenalty: 21, // > 20 for null
+            responseFormat: '{"type":"text"}',
+            seed: 0, // null
+            stop: "", // null
+            temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
+            topP: 101, // Percentage 0-100, > 100 means null
+            tools: '[{"type":"function","function":{"name":"web_search","description":"Search the internet","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Search query"}},"required":["query"]}}},{"type":"function","function":{"name":"code_interpreter","description":"Evaluates python code in a sandbox environment. The environment resets on every execution. You must send the whole script every time and print your outputs. Script should be pure python code that can be evaluated. It should be in python format NOT markdown. The code should NOT be wrapped in backticks. All python packages including requests, matplotlib, scipy, numpy, pandas, etc are available. Output can only be read from stdout, and stdin. Do not use things like plot.show() as it will not work. print() any output and results so you can capture the output.","parameters":{"type":"object","properties":{"code":{"type":"string","description":"The pure python script to be evaluated. The contents will be in main.py. It should not be in markdown format."}},"required":["code"]}}}]',
+            toolChoice: "auto", // "none" or "auto"
+            user: "" // null
         });
     }
 
@@ -84,7 +83,7 @@ contract AnthropicChatGpt {
     // @notice Starts a new chat
     // @param message The initial message to start the chat with
     // @return The ID of the newly created chat
-    function startChat(string memory message) public returns (uint) {
+    function startChat(bytes memory message) public returns (uint) {
         ChatRun storage run = chatRuns[chatRunsCount];
 
         run.owner = msg.sender;
@@ -108,26 +107,38 @@ contract AnthropicChatGpt {
     function onOracleLlmResponse(
         uint runId,
         IOracle.LlmResponse memory response,
-        string memory errorMessage
+        bytes memory errorMessage
     ) public onlyOracle {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("user")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("user")),
             "No message to respond to"
         );
 
-        if (!compareStrings(errorMessage, "")) {
-            IOracle.Message memory newMessage = createTextMessage("assistant", errorMessage);
+        if (!compareStrings(string(errorMessage), "")) {
+            IOracle.Message memory newMessage = createTextMessage(
+                "assistant",
+                errorMessage
+            );
             run.messages.push(newMessage);
             run.messagesCount++;
         } else {
             if (!compareStrings(response.functionName, "")) {
                 toolRunning[runId] = response.functionName;
-                IOracle(oracleAddress).createFunctionCall(runId, response.functionName, response.functionArguments);
+                IOracle(oracleAddress).createFunctionCall(
+                    runId,
+                    response.functionName,
+                    response.functionArguments
+                );
             } else {
                 toolRunning[runId] = "";
             }
-            IOracle.Message memory newMessage = createTextMessage("assistant", response.content);
+            IOracle.Message memory newMessage = createTextMessage(
+                "assistant",
+                response.content
+            );
             run.messages.push(newMessage);
             run.messagesCount++;
         }
@@ -140,7 +151,7 @@ contract AnthropicChatGpt {
     // @dev Called by teeML oracle
     function onOracleFunctionResponse(
         uint runId,
-        string memory response,
+        bytes memory response,
         string memory errorMessage
     ) public onlyOracle {
         require(
@@ -149,7 +160,10 @@ contract AnthropicChatGpt {
         );
         ChatRun storage run = chatRuns[runId];
         if (compareStrings(errorMessage, "")) {
-            IOracle.Message memory newMessage = createTextMessage("user", response);
+            IOracle.Message memory newMessage = createTextMessage(
+                "user",
+                response
+            );
             run.messages.push(newMessage);
             run.messagesCount++;
             IOracle(oracleAddress).createLlmCall(runId, config);
@@ -167,23 +181,30 @@ contract AnthropicChatGpt {
     ) public onlyOracle {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("user")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("user")),
             "No message to add context to"
         );
         // Retrieve the last user message
-        IOracle.Message storage lastMessage = run.messages[run.messagesCount - 1];
+        IOracle.Message storage lastMessage = run.messages[
+            run.messagesCount - 1
+        ];
 
         // Start with the original message content
-        string memory newContent = lastMessage.content[0].value;
+        bytes memory newContent = lastMessage.content[0].value;
 
         // Append "Relevant context:\n" only if there are documents
         if (documents.length > 0) {
-            newContent = string(abi.encodePacked(newContent, "\n\nRelevant context:\n"));
+            newContent = abi.encodePacked(
+                newContent,
+                "\n\nRelevant context:\n"
+            );
         }
 
         // Iterate through the documents and append each to the newContent
         for (uint i = 0; i < documents.length; i++) {
-            newContent = string(abi.encodePacked(newContent, documents[i], "\n"));
+            newContent = abi.encodePacked(newContent, documents[i], "\n");
         }
 
         // Finally, set the lastMessage content to the newly constructed string
@@ -196,15 +217,15 @@ contract AnthropicChatGpt {
     // @notice Adds a new message to an existing chat run
     // @param message The new message to add
     // @param runId The ID of the chat run
-    function addMessage(string memory message, uint runId) public {
+    function addMessage(bytes memory message, uint runId) public {
         ChatRun storage run = chatRuns[runId];
         require(
-            keccak256(abi.encodePacked(run.messages[run.messagesCount - 1].role)) == keccak256(abi.encodePacked("assistant")),
+            keccak256(
+                abi.encodePacked(run.messages[run.messagesCount - 1].role)
+            ) == keccak256(abi.encodePacked("assistant")),
             "No response to previous message"
         );
-        require(
-            run.owner == msg.sender, "Only chat owner can add messages"
-        );
+        require(run.owner == msg.sender, "Only chat owner can add messages");
 
         IOracle.Message memory newMessage = createTextMessage("user", message);
         run.messages.push(newMessage);
@@ -227,7 +248,9 @@ contract AnthropicChatGpt {
     // @param chatId The ID of the chat run
     // @return An array of messages
     // @dev Called by teeML oracle
-    function getMessageHistory(uint chatId) public view returns (IOracle.Message[] memory) {
+    function getMessageHistory(
+        uint chatId
+    ) public view returns (IOracle.Message[] memory) {
         return chatRuns[chatId].messages;
     }
 
@@ -235,7 +258,10 @@ contract AnthropicChatGpt {
     // @param role The role of the message
     // @param content The content of the message
     // @return The created message
-    function createTextMessage(string memory role, string memory content) private pure returns (IOracle.Message memory) {
+    function createTextMessage(
+        string memory role,
+        bytes memory content
+    ) private pure returns (IOracle.Message memory) {
         IOracle.Message memory newMessage = IOracle.Message({
             role: role,
             content: new IOracle.Content[](1)
@@ -249,7 +275,11 @@ contract AnthropicChatGpt {
     // @param a The first string
     // @param b The second string
     // @return True if the strings are equal, false otherwise
-    function compareStrings(string memory a, string memory b) private pure returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+    function compareStrings(
+        string memory a,
+        string memory b
+    ) private pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) ==
+            keccak256(abi.encodePacked((b))));
     }
 }

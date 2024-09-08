@@ -5,6 +5,7 @@ pragma solidity ^0.8.25;
 import {IAnalizer} from "./interfaces/IAnalizer.sol";
 import {IGaladrielOracle} from "./interfaces/IGaladrielOracle.sol";
 import {IMonsterNFT} from "./interfaces/IMonsterNFT.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 
 contract Analizer is IAnalizer {
@@ -38,6 +39,16 @@ contract Analizer is IAnalizer {
     monsterNFT = IMonsterNFT(newMonsterNFTAddress);
   }
 
+  function getMessageHistory(
+    uint256 callId
+  ) public view returns (IGaladrielOracle.Message[] memory) {
+    IGaladrielOracle.Message[] memory messages = new IGaladrielOracle.Message[](
+      1
+    );
+    messages[0] = llmMessage;
+    return messages;
+  }
+
   function analyze(string memory message) public returns (uint256) {
     uint256 currentId = callsCount;
     callsCount = currentId + 1;
@@ -60,12 +71,12 @@ contract Analizer is IAnalizer {
     IGaladrielOracle(oracleAddress).createOpenAiLlmCall(
       currentId,
       IGaladrielOracle.OpenAiRequest({
-        model: "gpt-4o-2024-08-06",
+        model: "gpt-4-turbo",
         frequencyPenalty: 21, // > 20 for null
         logitBias: "", // empty str for null
         maxTokens: 1000, // 0 for null
         presencePenalty: 21, // > 20 for null
-        responseFormat: '{"type":"json_schema","json_schema":{"name":"analysis","strict":true,"schema":{"type":"object","properties":{"analysis":{"type":"string"},"complexity":{"type":"number"},"attack":{"type":"number"}}}}}',
+        responseFormat: '{"type":"text"}',
         seed: 0, // null
         stop: "", // null
         temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
@@ -93,15 +104,15 @@ contract Analizer is IAnalizer {
           " description: ",
           parameters.description,
           " health: ",
-          parameters.health,
+          Strings.toString(parameters.health),
           " attack: ",
-          parameters.attack,
+          Strings.toString(parameters.attack),
           " defense: ",
-          parameters.defense,
+          Strings.toString(parameters.defense),
           " speed: ",
-          parameters.speed,
+          Strings.toString(parameters.speed),
           " magic: ",
-          parameters.magic
+          Strings.toString(parameters.magic)
         )
       )
     );
@@ -126,13 +137,34 @@ contract Analizer is IAnalizer {
     IGaladrielOracle.OpenAiResponse memory response,
     string memory errorMessage
   ) public onlyOracle {
+    console.log("test");
     if (bytes(errorMessage).length > 0) {
       return;
     }
 
-    AnalysisResult memory analysisResult = _parseAnalysisResult(
-      response.content
-    );
+    // AnalysisResult memory analysisResult = _parseAnalysisResult(
+    //   response.content
+    // );
+
+    AnalysisResult memory analysisResult = AnalysisResult({
+      data: AnalysisData({
+        targetContract: address(this),
+        functionName: "0x",
+        description: "0x",
+        value: 0,
+        complexity: 0,
+        riskLevel: 0
+      }),
+      monsterParameters: IMonsterNFT.Parameters({
+        name: "Water Dragon",
+        description: "A dragon that can control water.",
+        health: 100,
+        attack: 0,
+        defense: 0,
+        speed: 0,
+        magic: 0
+      })
+    });
 
     uint256 tokenId = monsterNFT.safeMint(callers[callId]);
 
